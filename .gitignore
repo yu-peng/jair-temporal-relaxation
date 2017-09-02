@@ -1,0 +1,10 @@
+*.aux
+*.log
+*.synctex.gz
+*.dropbox
+desktop.ini
+jair.bbl
+jair.aux
+jair.blg
+jair.log
+jair.pdf
