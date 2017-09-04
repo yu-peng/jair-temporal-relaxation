@@ -120,16 +120,14 @@ probability of failure to exceed the chance constraint, and increasing the level
 of accepted risk accordingly.
 
 
-Several methods have been developed to solve over-constrained temporal problems.
-In \cite{Beaumont_OCTRP_2001}, partial constraint satisfaction techniques were
-applied to find a subset of satisfiable constraints. Later, disjunctive
+Several methods have been developed to solve over-constrained temporal problems. \citeA{Beaumont_OCTRP_2001} applied partial constraint satisfaction techniques to find a subset of satisfiable constraints. Later, disjunctive
 constraints and optimality were added in the context of over-constrained
 Disjunctive Temporal Problems with Preferences (DTPPs)
 \cite{Peintner_Pref_2005}. In a DTPP, the disjuncts of every constraint are
 assigned a preference function that maps the temporal constraint to a cost
 value. The optimal partial solution is obtained by enumerating consistent
 subproblems using Branch \& Bound, as well as other optimization techniques
-introduced in \cite{Khatib01temporalconstraint}. Most of the prior work has
+introduced by \citeA{Khatib01temporalconstraint}. Most of the prior work has
 focused on restoring consistency through complete suspension of constraints,
 however, in real-world scenarios, the user often wants to preserve as much of
 the schedule as possible to minimize the perturbation. In addition, all prior
@@ -179,8 +177,8 @@ execution policy for events in these problems.
 
 
 A preliminary version of several sections in this article appeared in the
-proceedings of prior IJCAI \cite{Yu_BCDR_2013}, ICAPS
-\cite{Yu_CDRU_2014,cui2015optimising} and AAAI \cite{Yu_AAAI_2015} conferences.
+proceedings of prior International Joint Conference on Artificial Intelligence \cite{Yu_BCDR_2013},  International Conference on Automated Planning and Scheduling
+\cite{Yu_CDRU_2014,cui2015optimising} and AAAI Conference on Artificial Intelligence \cite{Yu_AAAI_2015}.
 This paper unifies and extends their presentation as follows: (1) a unified
 definition for temporal relaxation problems involving a) conditional temporal
 constraints, b) set-bounded uncertain duration and c) probabilistic uncertain
@@ -599,7 +597,7 @@ associated with an inactive event do not need to be satisfied.
 
 The solution to a CTP is a schedule that assigns a real value to each event in
 the CTP and is consistent with all the temporal constraints. Conditional
-Temporal Problems with Preferences (CTPPs,\cite{Falda07dynamicconsistency})
+Temporal Problems with Preferences \cite{Falda07dynamicconsistency}
 extend CTPs by allowing fuzzy temporal constraints and fuzzy atomic
 propositions. It allows the user to specify preferences over the execution time
 of each event $v_i\in V$, and compare two schedules $T_1$ and $T_2$ using a
@@ -774,8 +772,7 @@ Disjunctive Temporal Problems (DTPs) formulation
 \cite{Dechter_TCN_1991,Stergiou_DTP_1998}, whose constraints are disjunctions of
 possible simple temporal constraints, CCTP is often more compact for real-world
 scenarios since it allows a sequence of temporal constraints to be conditioned
-on choices. The Temporal Networks with Alternatives (TNA) formulation introduced
-by \cite{bartak2007temporal} also address this issue by introducing the concepts
+on choices. The Temporal Networks with Alternatives (TNA) formulation, introduced by \citeA{bartak2007temporal}, also address this issue by introducing the concepts
 of \textit{parallel} and \textit{alternative} processes. However, due to its
 nested network structure, it is often less efficient in encoding constraints
 that are conditioned on assignments to two independent variables, such as the
@@ -784,7 +781,7 @@ traversals between asphalt mound and methane seep sites.
 
 %Why did you rename, when they are in essence the same?
 Note that CCTP is similar, though different in notation, to the Optimal
-Conditional Simple Temporal Problem (OCSTP) formulation introduced by
+Conditional Simple Temporal Problem (OCSTP) formulation, which was introduced by
 \citeA{bobby_2006}. OCSTP and CCTP are equally expressive
 for consistency problems. OCSTP encodes temporal constraints as the domain
 values of discrete variables, and its relaxations are represented by additional
@@ -991,14 +988,13 @@ regardless of the outcomes of durations in $E_u$.
 \end{mydef}
 
 The STPU formalism has been extended with disjunctions and conditional
-constraints to handle more real-world scheduling and planning problems. In
-\cite{Venable05disjunctivetemporal,Peintner_07}, the \textit{Disjunctive
-	Temporal Problem with Uncertainty} (DTPU) formalism was introduced to permit
+constraints to handle more real-world scheduling and planning problems. \citeA{Venable05disjunctivetemporal} and \citeA{Peintner_07} introduced the \textit{Disjunctive
+	Temporal Problem with Uncertainty} (DTPU) formalism to permit
 non-convex and non-binary constraints. DTPU can be viewed as an extension to the
-deterministic Disjunctive Temporal Problem (DTP)
-\cite{Stergiou98backtrackingalgorithms} formalism with uncertain durations. It
+deterministic Disjunctive Temporal Problem
+formalism \cite{Stergiou98backtrackingalgorithms} with uncertain durations. It
 allows the expression of disjunctive constraints, and enables the agent to
-choose between alternatives. In \cite{Hunsberger12}, the Conditional Temporal Problems with Uncertainty (CTPUs) formalism was introduced to model problems with both uncontrollable duration and decision variables. We introduce CCTPU formalism to permit the description of more general scheduling and relaxation problems for scenarios with uncertain durations. It is equally expressive as DTPUs and allows more compact encodings of conditional decision variables and constraints. On the other hand, we are only concerned with controllable decision variables. This makes CCTPUs strictly simpler to solve compared to CTPUs, in that those tasks may require the enumeration of all scenarios that are dependent on uncontrollable variables.
+choose between alternatives. \citeA{Hunsberger12} introduced the Conditional Temporal Problems with Uncertainty (CTPUs) formalism to model problems with both uncontrollable duration and decision variables. We introduce CCTPU formalism to permit the description of more general scheduling and relaxation problems for scenarios with uncertain durations. It is equally expressive as DTPUs and allows more compact encodings of conditional decision variables and constraints. On the other hand, we are only concerned with controllable decision variables. This makes CCTPUs strictly simpler to solve compared to CTPUs, in that those tasks may require the enumeration of all scenarios that are dependent on uncontrollable variables.
 
 Formally, the CCTPU formulation extends the CCTP definition with three additional elements.
 
@@ -1220,8 +1216,8 @@ P(C\text{ satisfied}) \equiv P\left(\left\{\omega\left|\bigvee_{i\in I}\bigwedge
 While the definition here is presented for constraints systems in disjunctive normal form, this is a general representation with conversions via De Morgan's laws, and is sufficient for the chance-constrained problem definitions presented below.
 
 The cc-pCCTP formalism extends CCTPU with probabilistic uncertain durations and chance
-constraints. Here, we first repeat the definition of cc-pSTP from
-\cite{Fang_AAAI_2014} for reference.
+constraints. Here, we first repeat the definition of cc-pSTP, as presented by
+\citeA{Fang_AAAI_2014}, for reference.
 
 
 \begin{mydef}
@@ -1503,8 +1499,8 @@ solving cc-pCCTPs.
 \subsection{BCDR: Computing Continuous Relaxations}
 
 
-The Best-first Conflict-Directed Relaxation algorithm was first presented in
-\cite{Yu_BCDR_2013} for enumerating the relaxations to a CCTP in best-first
+The Best-first Conflict-Directed Relaxation algorithm was first presented by
+\citeA{Yu_BCDR_2013} for enumerating the relaxations to a CCTP in best-first
 order. It adapts and extends the Conflict-Directed A* (CD-A*) algorithm
 \cite{Williams_CDAstar_2002}, first developed for constraint optimization problems,
 with applications to hardware diagnosis, reconfiguration, repair and temporal
@@ -1884,7 +1880,7 @@ The solution to the above optimization problem is a set of relaxed bounds of
 $C_{17}$, $C_2$, and $C_4$ that resolves the conflict while minimizing the cost.
 In this case, the best relaxation is: set $lb_{C4}'$ to 50 and $ub_{C17}'$ to
 185. The cost is 27.5. In fact, this problem can also be viewed as a Simple
-Temporal Problem with Preferences. \cite{Khatib01temporalconstraint}
+Temporal Problem with Preferences. \citeA{Khatib01temporalconstraint}
 demonstrates that finding the optimal solution to a STPP with semi-convex
 preferences is tractable. In real world applications, we may substitute
 different optimization algorithms, depending on the preference functions, to
@@ -1981,8 +1977,8 @@ The key to solve this issue is to understand what controllable and uncertain dur
 each distance edge in the reduced graph. We name these constraints the
 \textit{supporting constraints}. The supporting constraints for an edge include
 the source constraint and the constraints that modify the weight of the edge
-during reduction. We extend the polynomial time algorithm in
-\cite{Vidal99handlingcontingency} with additional procedures for recording
+during reduction. We extend the polynomial time algorithm introduced by
+\citeA{Vidal99handlingcontingency} with additional procedures for recording
 supporting constraints during reductions (Algorithm \ref{alg:sc_conflict}). This
 extension enables the algorithm to extract a conflict from a negative loop in
 the reduced graph. The input to it is a grounded CCTPU without any unassigned
@@ -2120,7 +2116,7 @@ $O$($VE$) negative cycle detection.
 
 Our approach for learning conflicts from dynamic controllability checking
 algorithm is similar to that for strong controllability. We extend the
-\textsc{fastDCcheck} algorithm in \cite{Morris_astructural} with additional
+\textsc{fastDCcheck} algorithm, introduced by \citeA{Morris_astructural}, with additional
 steps in its reduction procedures to record the supporting constraints of reduced
 edges. Its pseudo code is presented in Algorithm \ref{alg:dc_conflict}.
 
@@ -2160,7 +2156,7 @@ $NCycle\leftarrow$\textsc{AllMaxConsistent}$(DG)$;\\
 \end{algorithm}
 
 
-As proved in \cite{Morris_astructural}, an STNU is dynamically controllable if
+As proved by \citeA{Morris_astructural}, an STNU is dynamically controllable if
 and only if it does not have a semi-reducible negative cycle. The
 \textsc{fastDCcheck} algorithm is designed based on this theorem. It converts
 the STNU to an equivalent distance graph of normal form (Line 1) and identifies
@@ -2229,7 +2225,7 @@ distance edge's weight value, such as the example in Figure
 \end{figure}
 
 The next step is to identify and reduce all moat paths in the distance graph using the
-iterative method introduced in \cite{Morris_astructural}. In this example, there
+iterative method introduced by \citeA{Morris_astructural}. In this example, there
 is only one valid moat path: $E1'\rightarrow E2\rightarrow E3$. This path has a
 negative weight, starts with a lower-case edge, and can be reduced to a single
 edge using a lower-case reduction. The reduced edge (represented by a dotted
@@ -2281,9 +2277,9 @@ algorithm is currently the second fastest DC checking algorithm with a
 complexity of $O(N^4)$, which is an order of magnitude higher than checking
 strong controllability. To improve run-time efficiency, the algorithm can be
 terminated and return true after a no-reduction iteration. This is similar to
-the implementation in \cite{Morris05temporaldynamic} and will not affect the
+the implementation presented by \citeA{Morris05temporaldynamic}, and will not affect the
 correctness of the results. The integration of BCDR with a cubic DC checking
-algorithm from \cite{morris2014dynamic}, is expected to further improve
+algorithm introduced by \citeA{morris2014dynamic}, is expected to further improve
 performance and is part of our future work to explore.
 
 
@@ -2366,7 +2362,7 @@ and $ub_{uA}'$, must follow $10 \leq lb_{uA}' \leq ub_{uA}' \leq 15$.
 
 Finally, we present the extension to the BCDR algorithm, called BCDR-C, that
 allows it to resolve over-constrained cc-pCCTPs. The extension leverages ideas
-from \cite{Fang_AAAI_2014} for grounding probabilistic Simple Temporal Problems
+presented by \citeA{Fang_AAAI_2014} for grounding probabilistic Simple Temporal Problems
 (pSTPs) into deterministic STNUs, and uses the conflict-directed framework for
 efficient conflict detection and resolution. Given a cc-pCCTP, BCDR-C enumerates
 feasible solutions in best-first order: a solution is a complete set of assignments and a collection of relaxations
@@ -2795,7 +2791,7 @@ switch to rational numbers which eliminates the numerical issue
 completely. We took the first approach since it provides the most intuitive
 configuration and the flexibility to work in all situations: the over-relaxation
 approach does not apply to problems whose solution space is very small, such as
-the RCPSPs in \cite{cui2015optimising}; the rational number approach requires an
+the RCPSPs used by \citeA{cui2015optimising} in their experiments; the rational number approach requires an
 approximation step to scale up the temporal bounds and rounding, whose impact
 on the correctness of BCDR is difficult to estimate. As mentioned in earlier
 sections, all temporal feasibility checking functions (consistency, strong controllability and
@@ -3255,7 +3251,7 @@ performance. As presented in Section 3, we use the Bellman-Ford algorithm for
 consistency checking and negative loop extraction ($O(N^2logN)$). We add another
 layer of triangular reduction ($O(N^2)$) on top of it for checking strong
 controllability. For dynamic controllability, we use the \textsc{fastDCCheck}
-algorithm $O(N^4)$ from \cite{Morris_astructural}. It is interesting to observe
+algorithm $O(N^4)$, introduced by \citeA{Morris_astructural}. It is interesting to observe
 that BCDR-U(DC) out-performs BCDR-U(SC), as there is an order-of-magnitude difference in their checking
 algorithms' runtime complexity. This is likely the result of the smaller amount
 of conflicts that were resolved by the dynamic controllability version, as shown
@@ -3424,7 +3420,7 @@ major challenge for reliable transit service.
 
 
 This problem has been investigated by many researchers in operation research,
-and more details can be found in \cite{bellei2010transit}. Here we present a
+and \citeA{bellei2010transit} presents more details about it. Here we present a
 simple example, constructed based on an SBS Transit article on bus
 bunching\footnote{'Sometimes, two buses of the same service arrive at the same
 time with one bus being overcrowded and the other almost empty. Why?',
@@ -3482,8 +3478,8 @@ more regular, such that they are less likely to wait for an extended period of
 time for the service, or board an overly crowded vehicle.
 
 
-Our approach is similar to the frequency-based method proposed in
-\cite{bartholdi2012self}, which has each bus observe the preceding and
+Our approach is similar to the frequency-based method proposed by
+\citeA{bartholdi2012self}, which has each bus observe the preceding and
 following ones, and strategically delay themselves at stations to maintain
 regular headways. As presented in the same paper, this method has been shown to
 outperform prior work in controlling the university bus system at Georgia
@@ -3576,8 +3572,8 @@ approaches: conflict-directed relaxation with BCDR-U(DC), and a MIP encoding
 with Gurobi. For BCDR-U(DC), we use Gurobi as its sub-solver to compute optimal
 relaxations for learned conflicts. For the MIP encoding approach, we use Gurobi
 directly to solve the complete problem. The MIP encoding we used was first
-introduced in \cite{wah-xin:06} for checking dynamic controllability, and later
-modified by \cite{cui2015optimising} to evaluate the robustness of schedules for
+introduced by \citeA{wah-xin:06} for checking dynamic controllability, and later
+a modification was presented by \citeA{cui2015optimising} to evaluate the robustness of schedules for
 resource-constrained project scheduling problems. The objective function for
 both approaches are set to find the minimum cost relaxations, which correspond
 to the minimum delays that have to be built into each station, and makes the
@@ -3702,7 +3698,7 @@ problems when compared to the direct MIP encoding approach.
 
 Finally, we present the application of BCDR to evaluating the robustness of
 resource-constrained project schedules. First presented by
-\citeauthor{cui2015optimising} \citeyear{cui2015optimising}, the objective of
+\citeA{cui2015optimising}, the objective of
 this experiment is very different from the previous two experiments:
 instead of over-constrained temporal problems, BCDR is given a feasible problem
 and a partial-order schedule for it, and is asked to find the maximum
@@ -3819,7 +3815,7 @@ In this experiment, we solved the over-constrained problems using two
 approaches: conflict-directed relaxation with BCDR-U(DC), and MIP encoding with
 Gurobi. Similar to the second experiment on transit route schedules, we use
 Gurobi as the sub-solver for BCDR-U(DC). For the MIP encoding approach, we used the
-encoding introduced in \cite{cui2015optimising} to compute the maximum
+encoding introduced by \citeA{cui2015optimising} to compute the maximum
 flexibility that can be built into the uncertain durations. The problems in this
 experiment are of much smaller scale compared to the previous two experiments,
 and both approaches were able to solve all problem within the time limit (30
