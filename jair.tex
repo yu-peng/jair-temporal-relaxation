@@ -505,9 +505,9 @@ bounds).
 	\centering
 	\begin{tabular}{| p{3cm} | p{1.8cm} | p{3cm} | p{1.8cm} | p{3cm} |}
 		\hline
-		\textbf{Relaxation 1} & \multirow{6}{*}{\parbox{2cm}{\textbf{Do not\\ relax $C_{17}$}}} & \textbf{Relaxation 2} & \multirow{6}{*}{\parbox{2cm}{\textbf{$C_{2}$ is at\\ least 44}}} & \textbf{Relaxation 3} \\
+		\textbf{Relaxation 1} & & \textbf{Relaxation 2} & & \textbf{Relaxation 3} \\
 		\hline
-		$AM \leftarrow B$ &  & $AM \leftarrow B$ & & $AM \leftarrow B$ \\
+		$AM \leftarrow B$ &  \multirow{5}{*}{\parbox{2cm}{Rich told\\ system\\ \textbf{"Do not\\ relax $C_{17}$"}}}  & $AM \leftarrow B$ & \multirow{5}{*}{\parbox{2cm}{Rich told\\ system\\ \textbf{"$C_{2}$ is at\\ least 44"}}}  & $AM \leftarrow B$ \\
 		$MS \leftarrow Y$ & & $MS \leftarrow X$ & & $MS \leftarrow Y$ \\
 		$C_2$ to $\in[39,60]$ & & $C_3$ to $\geq57.5$ & & $C_4$ to $\geq55$ \\
 		$C_{17}$ to $\in[0,185]$ & & $C_2$ to $\in[42.5,60]$ & & $C_2$ to $\in[44,60]$ \\
@@ -559,10 +559,10 @@ constraints and guarded elements, and present how it is different from other
 temporal problem models in literature.
 
 
-Temporal problems with choices are usually modeled using Conditional Temporal
+Temporal problems with choices can be modeled using Conditional Temporal
 Problems (CTPs) \cite{Tsamardinos_CTP_2003}. We will start by reviewing the definition of this formalism as a stepping stone. CTP is a generalization of the
 restricted problem class of Simple Temporal Problems \cite{Dechter_TCN_1991} by
-adding uncontrollable discrete choices and by conditioning the occurrence of
+adding uncontrollable outcomes of actions and by conditioning the occurrence of
 events and simple temporal constraints on the outcomes of these choices.
 Conditional Temporal Problems (CTPs) are capable of modeling conditional plans
 and uncertainty during executions.
@@ -595,8 +595,9 @@ be inactive and does not need to be scheduled. All temporal constraints
 associated with an inactive event do not need to be satisfied.
 
 
-The solution to a CTP is a schedule that assigns a real value to each event in
-the CTP and is consistent with all the temporal constraints. Conditional
+The solution to a CTP is a dynamic schedule that is able to react to
+observations in real time, such that all temporal constraints will be satisfied
+no matter how the uncontrollable outcomes turn out. Conditional
 Temporal Problems with Preferences \cite{Falda07dynamicconsistency}
 extend CTPs by allowing fuzzy temporal constraints and fuzzy atomic
 propositions. It allows the user to specify preferences over the execution time
@@ -950,7 +951,7 @@ world;
 		\item free constraints $e_i \in E_f$, which are of type $v_x - v_y \in
 [l_{xy},b_{xy}]$ where $v_x, v_y$ are events. 
 		\item uncertain durations $u_{xy} \in E_u$, where $u_{xy} \in [l_{xy},b_{xy}]$ describes the difference in time
-		 between received event $r_y\in V_r$ and activated event $v_x\in V_a$, such that $(r_y - v_x) = u_{xy}$. 
+		 between one received event $r_y\in V_r$ and one activated event $v_x\in V_a$, such that $(r_y - v_x) = u_{xy}$; or between two received events $r_y, r_x\in V_r$, such that $(r_y - r_x) = u_{xy}$. 
 		 Uncertain durations are not assigned by the agent, and can take any value in the bounded interval. 
 	\end{itemize}
 	
@@ -994,7 +995,7 @@ non-convex and non-binary constraints. DTPU can be viewed as an extension to the
 deterministic Disjunctive Temporal Problem
 formalism \cite{Stergiou98backtrackingalgorithms} with uncertain durations. It
 allows the expression of disjunctive constraints, and enables the agent to
-choose between alternatives. \citeA{Hunsberger12} introduced the Conditional Temporal Problems with Uncertainty (CTPUs) formalism to model problems with both uncontrollable duration and decision variables. We introduce CCTPU formalism to permit the description of more general scheduling and relaxation problems for scenarios with uncertain durations. It is equally expressive as DTPUs and allows more compact encodings of conditional decision variables and constraints. On the other hand, we are only concerned with controllable decision variables. This makes CCTPUs strictly simpler to solve compared to CTPUs, in that those tasks may require the enumeration of all scenarios that are dependent on uncontrollable variables.
+choose between alternatives. \citeA{Hunsberger12} introduced the Conditional Temporal Problems with Uncertainty (CTPUs) formalism to model problems with both uncontrollable duration and observations. We introduce CCTPU formalism to permit the description of more general scheduling and relaxation problems for scenarios with uncertain durations. It is equally expressive as DTPUs and allows more compact encodings of conditional decision variables and constraints. On the other hand, we are only concerned with controllable decision variables. This makes CCTPUs strictly simpler to solve compared to CTPUs, in that those tasks may require the enumeration of all scenarios that are dependent on uncontrollable variables.
 
 Formally, the CCTPU formulation extends the CCTP definition with three additional elements.
 
@@ -1052,7 +1053,7 @@ strategies a solution can enable.
 	\item A strongly controllable solution makes the resulting STPU strongly controllable. That is, the relaxation enables an execution strategy with a firm schedule for all events.  
 	
 	\item A dynamically controllable solution makes the resulting STPU dynamically
-	controllable, for which a dynamic execution strategy that meets all constraints can be derived. 
+	controllable, for which a dynamic execution strategy that reacts in real time to observations of uncertain duration and meets all constraints can be derived. 
 	
 \end{itemize}
 
@@ -1273,9 +1274,9 @@ given the outcomes of $E_d$. This corresponds to $C$ in Definition
 \end{mydef}
 
 
-Given a cc-pSTP, $P$, if we execute the
+Given a cc-pSTP, $A$, if we execute the
 controllable events using $S_x$ in its solution, the chance of violating any
-temporal constraints in $P$ is guaranteed to be less than $\Delta_t$. The policy
+temporal constraints in $A$ is guaranteed to be less than $\Delta_t$. The policy
 $S_x$ could be a static schedule (with a strongly controllable $N_g$), or a
 dynamic execution policy (with a dynamically controllable $N_g$). If a cc-pSTP
 is over-constrained, no solution exists that can meet all temporal constraints
@@ -1318,18 +1319,18 @@ its constraints to be relaxed at a cost to allow a feasible solution.
 
 \begin{mydef}
 	
-	A valid resolution for an over-constrained cc-pSTP, $P$, is a 3-tuple $\langle
+	A valid resolution for an over-constrained cc-pSTP, $A$, is a 3-tuple $\langle
 	R_e,\Delta'_t, N_{alloc}\rangle$, where:
 	
 	\begin{itemize}
 		
 		\item $R_e$ is a set of relaxations (in terms of relaxed lower and upper
-		bounds) to constraints in $RE$ of $P$. 
+		bounds) to constraints in $RE$ of $A$. 
 		
-		\item $\Delta'_t$ is a relaxation for $\Delta_t$ of $P$,
+		\item $\Delta'_t$ is a relaxation for $\Delta_t$ of $A$,
 		and $\Delta'_t \geq \Delta_t$.
 		
-		\item $N_{alloc}$ is a STNU generated from $P$ by grounding all probabilistic
+		\item $N_{alloc}$ is a STNU generated from $A$ by grounding all probabilistic
 		durations with fixed lower and upper bounds. 
 		
 	\end{itemize}
@@ -1485,7 +1486,7 @@ real-world problems of large scale, and are compatible with not only the consist
 
 
 In our previous work, we have introduced these variant problems and solutions
-through a variety of names. namely Best-first Conflict-Directed Relaxation
+through a variety of name, namely the Best-first Conflict-Directed Relaxation
 (BCDR) \cite{Yu_BCDR_2013} for CCTPs, Conflict-Directed Relaxation with
 Uncertainty (CDRU) \cite{Yu_CDRU_2014} for CCTPUs, and Conflict-Directed Chance
 constraint Relaxation (CDCR) \cite{Yu_AAAI_2015} for cc-pCCTPs. In this paper we
@@ -1574,30 +1575,30 @@ detail. The pseudo code of BCDR is given in Algorithm \ref{alg:bcdr}.
 \Input{A CCTP $T=\langle P,Q,V,E,RE,L_p,L_e,f_p,f_e\rangle $.}
 \Output{A relaxation $\langle A,R\rangle $ that maximizes $f_p-f_e$.}
 \Initialize{}
-\Indp{$Cand\leftarrow \langle A,R_e,C_r,C_{cont}\rangle $; the first candidate}\;
-{$Q\leftarrow\{Cand\}$; a priority queue that records candidates}\;
+\Indp{$\mathit{Cand}\leftarrow \langle A,R_e,C_r,C_{cont}\rangle $; the first candidate}\;
+{$Q\leftarrow\{\mathit{Cand}\}$; a priority queue that records candidates}\;
 {$C\leftarrow\{\}$; the set of all known conflicts}\;
 {$U\leftarrow V$; the list of unassigned controllable variables}\;
 \Indm
 \Algorithm{}
 \Indp
 \While{$Q\neq \emptyset$}{
-	$Cand\leftarrow $Dequeue$(Q)$\;
-	$currCFT\leftarrow$\textsc{UnresolvedConflicts}$(Cand,C)$\;
-	\eIf{$currCFT==null$}{
-		\eIf{isComplete?$(Cand,U)$}{
-			$newCFT\leftarrow$\textsc{ConsistencyCheck}$(cand)$\;
-			\eIf{$newCFT==null$}{
-				\Return $Cand$\;
+	$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
+	$\mathit{currConf}\leftarrow$\textsc{UnresolvedConflicts}$(\mathit{Cand},C)$\;
+	\eIf{$\mathit{currConf}==null$}{
+		\eIf{isComplete?$(\mathit{Cand},U)$}{
+			$\mathit{newConf}\leftarrow$\textsc{ConsistencyCheck}$(\mathit{Cand})$\;
+			\eIf{$\mathit{newConf}==null$}{
+				\Return $\mathit{Cand}$\;
 			}{
-			$C\leftarrow C\cup\{newCFT\}$\;
-			$Q\leftarrow Q\cup\{Cand\}$\;
+			$C\leftarrow C\cup\{\mathit{newConf}\}$\;
+			$Q\leftarrow Q\cup\{\mathit{Cand}\}$\;
 		}			
 		}{
-			$Q\leftarrow Q\cup$\textsc{ExpandOnVariable}($Cand,U$)\;
+			$Q\leftarrow Q\cup$\textsc{ExpandOnVariable}($\mathit{Cand},U$)\;
 		}
 		}{
-		$Q\leftarrow Q\cup$\textsc{ExpandOnConflict}($Cand,currCFT$)\;
+		$Q\leftarrow Q\cup$\textsc{ExpandOnConflict}($\mathit{Cand},\mathit{currConf}$)\;
 	}
 }
 \Return $null$\;
@@ -1605,7 +1606,7 @@ detail. The pseudo code of BCDR is given in Algorithm \ref{alg:bcdr}.
 \label{alg:bcdr}
 \end{algorithm}
 
-BCDR starts with an empty candidate in the queue (Line 1). A candidate, $Cand$,
+BCDR starts with an empty candidate in the queue (Line 1). A candidate, $\mathit{Cand}$,
 is a 4-tuple $\langle A,R,C_r,C_{cont}\rangle $ with assignments $A$, continuous temporal
 relaxations $R$, resolved conflicts $C_r$ and continuously resolved conflicts
 $C_{cont}\subseteq C_r$, all being empty lists in the first candidate. BCDR
@@ -1615,12 +1616,12 @@ queue is exhausted, it returns null, indicating that no relaxation exists for th
 input CCTP (Line 24).
 
 
-Within each loop, BCDR first dequeues the best partial candidate, $Cand$ (Line
-6). It checks if $Cand$ resolves all known conflicts (Line 7). If not, an
-unresolved conflict $currCFT$ will be returned by function
+Within each loop, BCDR first dequeues the best partial candidate, $\mathit{Cand}$ (Line
+6). It checks if $\mathit{Cand}$ resolves all known conflicts (Line 7). If not, an
+unresolved conflict $\mathit{currConf}$ will be returned by function
 \textsc{ResolveKnownConflicts?}, which compares the resolved conflicts $C_r$ in
-$Cand$ with all known conflicts $C$. $currCFT$ is then used for expanding $Cand$
-by function \textsc{ExpandOnConflict} (Line 21). The child candidates of $Cand$,
+$\mathit{Cand}$ with all known conflicts $C$. $\mathit{currConf}$ is then used for expanding $\mathit{Cand}$
+by function \textsc{ExpandOnConflict} (Line 21). The child candidates of $\mathit{Cand}$,
 which includes both discrete and continuous relaxations for the known conflicts,
 will then be enqueued. For example, assume that we apply BCDR to the example
 presented in Figure \ref{fig:example_cctp}. When expanding
@@ -1632,9 +1633,9 @@ and a temporal relaxation to the upper bound of $C_{17}$ (Figure
 will then be added back to $Q$.
 
 
-If $Cand$ resolves all known conflicts, BCDR then checks if it is complete,
+If $\mathit{Cand}$ resolves all known conflicts, BCDR then checks if it is complete,
 which means that no more variables can be assigned, by comparing its assignments
-and all unassigned variables in the CCTP (Line 9). If $Cand$ is incomplete, BCDR
+and all unassigned variables in the CCTP (Line 9). If $\mathit{Cand}$ is incomplete, BCDR
 will expand it using the assignments to one unassigned variable through function
 \textsc{ExpandOnVariable} (Line 18). For example, assume again that we need to expand
 a partial candidate $\{AM$=$A\}$, but with variable
@@ -1662,11 +1663,11 @@ the partial candidate using the three possible assignments of $MS$ (Figure
 
 
 
-If $Cand$ is complete, BCDR proceeds to check its consistency using function
-\textsc{ConsistencyCheck} (Line 10). If no conflict is returned, $Cand$ will be
+If $\mathit{Cand}$ is complete, BCDR proceeds to check its consistency using function
+\textsc{ConsistencyCheck} (Line 10). If no conflict is returned, $\mathit{Cand}$ will be
 returned as the best relaxation for the input CCTP (Line 12). If a new conflict,
-$newCFT$, is detected by \textsc{ConsistencyCheck}, BCDR will record it in $C$
-and put $Cand$ back to the queue for future expansions (Line 14,15), since it
+$\mathit{newConf}$, is detected by \textsc{ConsistencyCheck}, BCDR will record it in $C$
+and put $\mathit{Cand}$ back to the queue for future expansions (Line 14,15), since it
 now has one unresolved conflict.
 
 
@@ -1734,7 +1735,7 @@ constraints. The function implements the Bellman-Ford algorithm
 \cite{bellman1956routing,ford1956network} for checking temporal consistency. If
 the candidate plan is temporally inconsistent, the algorithm will return a
 simple negative cycle as the cause of failure. We can extract the minimal
-inconsistent set of constraints, also called minimal conflict
+inconsistent set of constraints, also called $minimal conflict$
 \cite{Liffiton_MUS_2005a}, using this simple negative cycle. For example, Figure
 \ref{fig:negative_cycle_consistency} shows a simple negative cycle detected in
 the TPN presented in Figure \ref{fig:example_cctp}: the mission time is too
@@ -1791,19 +1792,19 @@ resolve the conflicts.
 	\SetKwInput{Initialize}{Initialization}
 	\SetKwInput{Algorithm}{Algorithm}
 	\Indm
-	\Input{A candidate to expand $Cand$ $\langle A,R,C_r,C_{cont}\rangle$ and a
-		minimal conflict $currCFT$.}
-	\Output{A set of expanded candidates $newCands$.}
+	\Input{A candidate to expand $\mathit{Cand}$ $\langle A,R,C_r,C_{cont}\rangle$ and a
+		minimal conflict $\mathit{currConf}$.}
+	\Output{A set of expanded candidates $\mathit{newCands}$.}
 	\Initialize{}
 	\Indp
-	{$newCands\leftarrow \{\}$}; collection of newly generated candidates\;
-	{$CFTs\leftarrow C_{cont}\cup \{currCFT\}$; conflicts to be resolved
+	{$\mathit{newCands}\leftarrow \{\}$}; collection of newly generated candidates\;
+	{$\mathit{Confs}\leftarrow C_{cont}\cup \{\mathit{currConf}\}$; conflicts to be resolved
 		continuously}\;
-	{$A_{alter}\leftarrow \{\}$}; collection of alternative assignments for the ones in $currCFT$\;
+	{$A_{alter}\leftarrow \{\}$}; collection of alternative assignments for the ones in $\mathit{currConf}$\;
 	\Indm
 	\Algorithm{}
 	\Indp
-	\For{$a\in currCFT$}{
+	\For{$a\in \mathit{currConf}$}{
 		$A_{alter}=A_{alter}\cup$\textsc{GetAlternatives}$(a)$\;
 		\For{$a_l\in labels(a)$}{
 			$A_{alter}=A_{alter}\cup$\textsc{GetAlternatives}$(a_l)$\;
@@ -1811,19 +1812,19 @@ resolve the conflicts.
 	}
 	\For{$a_{extend}\in A_{alter}$}{
 		\If{\textsc{notCompeting($A,a_{extend}$)}}{
-			$Cand_{new}\leftarrow \langle A\cup\{a_{extend}\},R,C_r,C_{cont}\rangle$\;
-			$newCands\leftarrow newCands\cup \{Cand_{new}\}$\;
+			$\mathit{Cand_{new}}\leftarrow \langle A\cup\{a_{extend}\},R,C_r,C_{cont}\rangle$\;
+			$\mathit{newCands}\leftarrow \mathit{newCands}\cup \{\mathit{Cand_{new}}\}$\;
 		}
 	}
-	$E_{relax}\leftarrow$\textsc{ExtractConstraints}$(CFTs)$\;
+	$E_{relax}\leftarrow$\textsc{ExtractConstraints}$(\mathit{Confs})$\;
 	$f_{obj}\leftarrow\sum_{e\in E_{relax}}f_e(\Delta e)$\;
 	$R_{new}\leftarrow$\textsc{Optimize}$(f_{obj},\langle
 	E_{relax}\geq \textbf{0}\rangle )$\;
 	\If{$R_{new}\neq null$}{
-		$Cand_{new}\leftarrow\langle A,R_{new},C_r,C_{cont}\rangle $\;
-		$newCands\leftarrow newCands\cup \{Cand_{new}\}$\;
+		$\mathit{Cand_{new}}\leftarrow\langle A,R_{new},C_r,C_{cont}\rangle $\;
+		$\mathit{newCands}\leftarrow \mathit{newCands}\cup \{\mathit{Cand_{new}}\}$\;
 	} 
-	\Return $newCands$\;
+	\Return $\mathit{newCands}$\;
 	\caption{Function \textsc{ExpandOnConflict}}
 	\label{alg:ExpandOnConflict}
 \end{algorithm}
@@ -1836,7 +1837,7 @@ new candidates using the resolutions to the conflict (Algorithm
 First, we generate resolutions for the conflict by negating variable assignments
 (Line 4-15). If a variable $p_i$ is conditioned on other assignments, in
 addition to flipping the assignment to $p_i$, we can also negate its guards. This
-deactivates the variable and resolves the conflict. For example, assuming that we have to make an additional decision on the imaging method, either using stereo camera or mono camera, for methane seeps site Y. Then for a conflict that involves assignment $IMAGE_Y=STEREO$, given tha we know variable $IMAGE_Y$ has label $MS=Y$, we can resolve the conflict by flipping the assignment to either $IMAGE_Y$ or $MS$: $IMAGE_Y$=$MONO$, $MS$=$X$ or $MS$=$Z$.
+deactivates the variable and resolves the conflict. Assuming that we have to make an additional decision on the imaging method, using either stereo camera or mono camera, for imaging methane seeps site Y. Then for a conflict that involves assignment $\mathit{IMAGE_Y=STEREO}$, given tha we know variable $\mathit{IMAGE_Y}$ has label $MS=Y$, we can resolve the conflict by flipping the assignment to either $\mathit{IMAGE_Y}$ or $MS$: $\mathit{IMAGE_Y=MONO}$, $MS$=$X$ or $MS$=$Z$.
 
 
 In the second stage, we compute the optimal continuous relaxation to the
@@ -1844,12 +1845,12 @@ relaxable temporal bounds (Line 16-22), which provides the lower bound on the
 cost for resolving the conflict continuously. We formulate the relaxation as an optimization
 problem with linear constraints (Line 16) and linear/quadratic objective
 function (Line 17). The objective function is the minimization over the sum of
-the relaxation costs of all relaxable constraints, as in (\ref{eqn:rel_obj}).
+the relaxation costs of all relaxable constraints, as in (Equation \ref{eqn:rel_obj}).
 The variables in this optimization problem are $LB_i'$ s and $UB_i'$ s, which
 are the relaxed bounds for each relaxable temporal constraint. For relaxable
 requirement constraints, their new temporal bounds must be no tighter than the
-original bounds, as in (\ref{eqn:rel_req}). The resolution constraints in
-(\ref{eqn:conf_res}) are added to ensure that all known conflicts are repaired
+original bounds, as in (Equation \ref{eqn:rel_req}). The resolution constraints in
+(Equation \ref{eqn:conf_res}) are added to ensure that all known conflicts are repaired
 by the resolution. Given $m$ conflicts, the same number of resolution
 constraints will be added, each representing the negation of one linear
 expression in each conflict (Line 18).
@@ -1926,31 +1927,31 @@ tightening uncertain constraints.
 	\Input{\textbf{A CCTPU $T=\langle P,Q,V,V_r,E,E_u,RE,RE_u,L_p,L_e,f_p,f_e\rangle$.}}
 	\Output{Assignments and relaxations $\boldsymbol{\langle A,R_e,R_u\rangle}$ that maximizes $f_p-f_e$.}
 	\Initialize{}
-	\Indp{$Cand\leftarrow \langle A,R_e,R_u,C_r,C_{cont}\rangle $; the first
+	\Indp{$\mathit{Cand}\leftarrow \langle A,R_e,R_u,C_r,C_{cont}\rangle $; the first
 		candidate}\;
-	{$Q\leftarrow\{Cand\}$; a priority queue that records candidates}\;
+	{$Q\leftarrow\{\mathit{Cand}\}$; a priority queue that records candidates}\;
 	{$C\leftarrow\{\}$; the set of all known conflicts}\;
 	{$U\leftarrow V$; the list of unassigned controllable variables}\;
 	\Indm
 	\Algorithm{}
 	\Indp
 	\While{$Q\neq \emptyset$}{
-		$Cand\leftarrow $Dequeue$(Q)$\;
-		$currCFT\leftarrow$\textsc{UnresolvedConflicts}$(Cand,C)$\;
-		\eIf{$currCFT==null$}{
-			\eIf{isComplete?$(Cand,U)$}{
-				$newCFT\leftarrow$\textbf{\textsc{ControllabilityCheck}}$(Cand)$;\\
-				\eIf{$newCFT==null$}{
-					\Return $Cand$\;
+		$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
+		$\mathit{currConf}\leftarrow$\textsc{UnresolvedConflicts}$(\mathit{Cand},C)$\;
+		\eIf{$\mathit{currConf}==null$}{
+			\eIf{isComplete?$(\mathit{Cand},U)$}{
+				$\mathit{newConf}\leftarrow$\textbf{\textsc{ControllabilityCheck}}$(\mathit{Cand})$;\\
+				\eIf{$\mathit{newConf}==null$}{
+					\Return $\mathit{Cand}$\;
 				}{
-				$C\leftarrow C\cup\{newCFT\}$\;
-				$Q\leftarrow Q\cup\{Cand\}$\;
+				$C\leftarrow C\cup\{\mathit{newConf}\}$\;
+				$Q\leftarrow Q\cup\{\mathit{Cand}\}$\;
 			}			
 		}{
-		$Q\leftarrow Q\cup$\textsc{ExpandOnVariable}($Cand,U$);\\
+		$Q\leftarrow Q\cup$\textsc{ExpandOnVariable}($\mathit{Cand},U$);\\
 	}
 }{
-$Q\leftarrow$ $Q\cup$\textbf{\textsc{ExpandOnConflict}}($Cand,currCFT$);\\
+$Q\leftarrow$ $Q\cup$\textbf{\textsc{ExpandOnConflict}}($\mathit{Cand},\mathit{currConf}$);\\
 }
 }
 \Return $null$\;
@@ -1990,7 +1991,7 @@ variables. There are three major steps in this algorithm:
 	source, which is either an upper or lower bound of a temporal constraint.
 	
 	\item Reduce all non-contingent edges that start (Line 14) or end (Line 5) at an
-	uncontrollable node using the triangular reduction rule. If constraint A is
+	uncontrollable node using the triangular reduction rules (Figure \ref{fig:sc_reduction}). If constraint A is
 	reduced to C through B, the supporting constraints of C will be updated to the
 	union of the supporting constraints of A and B (Line 11, 20). 
 	
@@ -2256,7 +2257,7 @@ E3$. The negative cycle would not exist without this reduced edge. Therefore,
 the expression that supports the reduction, $-LB(B) \le 0$, which guarantees a
 negative weight for the moat path, is included in the conflict. The conflict we
 can extract from the STNU is a conjunction of two linear expressions,
-\{$B_U+A_L-A_U-B_L$;$-B_L$\},. Making making any one of them non-negative will
+\{$B_U+A_L-A_U-B_L$;$-B_L$\},. Making any one of them non-negative will
 resolve this conflict.
 
 
@@ -2405,69 +2406,71 @@ modifications from BCDR-U to BCDR-C are the following:
 	\Output{A solution $\langle A,R_e,\Delta'_t,N_{alloc}\rangle$ that maximize
 		$f_{p}-f_{e}-f_\Delta$.}
 	\Initialize{}
-	\Indp{$Cand\leftarrow \langle A,R_{e},\Delta_t,N_{default},C_r\rangle $; the
-		first candidate with the default risk allocation}\;
-	{$Q\leftarrow\{Cand\}$; a priority queue of candidates}\;
+	\Indp{$\mathit{Cand}\leftarrow \langle A=\emptyset,R_{e}=\emptyset,\Delta_t,N_{default},C_r=\emptyset\rangle $; the
+		first candidate with the default risk allocation, and empty sets for assignments, relaxations and continuously resolved conflicts}\;
+	{$Q\leftarrow\{\mathit{Cand}\}$; a priority queue of candidates}\;
 	{$C\leftarrow\{\}$; the set of all known conflicts}\;
 	{$U\leftarrow V$; the list of unassigned controllable variables}\;
 	\Indm
 	\Algorithm{}
 	\Indp
 	\While{$Q\neq \emptyset$}{
-		$Cand\leftarrow $Dequeue$(Q)$\;
-		$currCFT\leftarrow$\textsc{UnresolvedConflict}$(Cand,C)$\;
-		\eIf{$currCFT==null$}{
-			\eIf{isComplete?$(Cand,U)$}{
-				$newCFT\leftarrow$\textsc{ControllabilityCheck}$(Cand)$;\\
-				\eIf{$newCFT==null$}{
-					\Return $Cand$\;
+		$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
+		$\mathit{currConf}\leftarrow$\textsc{UnresolvedConflict}$(\mathit{Cand},C)$\;
+		\eIf{$\mathit{currConf}==null$}{
+			\eIf{isComplete?$(\mathit{Cand},U)$}{
+				$\mathit{newConf}\leftarrow$\textsc{ControllabilityCheck}$(\mathit{Cand})$;\\
+				\eIf{$\mathit{newConf}==null$}{
+					\Return $\mathit{Cand}$\;
 				}{
-					$C\leftarrow C\cup\{newCFT\}$\;
-					$Q\leftarrow Q\cup\{Cand\}$\;
+					$C\leftarrow C\cup\{\mathit{newConf}\}$\;
+					$Q\leftarrow Q\cup\{\mathit{Cand}\}$\;
 				}
 			}{
-				$Q\leftarrow Q\cup$\textsc{ExpandOnVariable}($Cand,U$);\\
+				$Q\leftarrow Q\cup$\textsc{ExpandOnVariable}($\mathit{Cand},U$);\\
 			}			
 		}{
-			$Q\leftarrow$ $Q\cup$\textsc{\textsc{ExpandOnConflictAndAllocateRisk}}($Cand,currCFT$);\\
+			$Q\leftarrow$ $Q\cup$\textsc{\textsc{ExpandOnConflictAndAllocateRisk}}($\mathit{Cand},\mathit{currConf}$);\\
 		}
 	}
 	\Return $null$\;
-\caption{BCDR-C algorithm for solving cc-pCCTPs}
+\caption{BCDR-C algorithm for resolving cc-pCCTPs}
 \label{alg:bcdr_chance_constraints}
 \end{algorithm}
 
 
-We first present an overview of the algorithm that highlights the
-modifications, then discuss the risk-allocation and chance constraint
-relaxation procedures in detail. The pseudo code of the chance-constrained version of BCDR-C is
-presented in Algorithm \ref{alg:bcdr_chance_constraints}. Similar to the
-previous two versions, we implement BCDR-C with a priority queue for enumerating
-resolutions in best-first order. The algorithm starts with an empty candidate
-(Line 1) that has no assignments or relaxations over temporal constraints ($A$ and $R_{e}$) and
-chance constraint ($\Delta_{cand}$), and an empty set of resolved conflicts
+We first present an overview of the algorithm that highlights the modifications,
+then discuss the risk-allocation and chance constraint relaxation procedures in
+detail. The pseudo code of the chance-constrained version of BCDR-C is presented
+in Algorithm \ref{alg:bcdr_chance_constraints}. Similar to the previous two
+versions, we implement BCDR-C with a priority queue for enumerating resolutions
+in best-first order. The algorithm starts with an empty candidate (Line 1) that
+has no assignments or relaxations over temporal constraints ($A$ and $R_{e}$)
+and chance constraint ($\Delta_t$), and an empty set of resolved conflicts
 ($C_r$). The candidate is associated with a default risk allocation over all
-probabilistic uncertain durations, which is represented by a CCTPU ($N_{default}$).
-The initial allocation is computed from a non-linear solver and is conservative
-enough to satisfy the chance constraint. The initial candidate is the only element
-in the queue before search starts (Line 2).
+probabilistic uncertain durations, which is represented by a CCTPU
+($N_{default}$). The initial allocation is computed from a non-linear solver and
+is conservative enough to satisfy the chance constraint. For example, we can
+compute the initial allocation by solving \ref{prob:conflict_resolution_cc}
+without any linear constraints from conflicts.  The initial candidate is the
+only element in the queue before search starts (Line 2).
 
 
 Within the main loop, BCDR-C first dequeues the best candidate (Line 6) and
 checks if it resolves all known conflicts (Line 7). If not, a conflict
-$currCFT$ will be returned by function \textsc{UnresolvedConflict}. The
-unresolved conflict is then used for expanding $Cand$ (Line 21). All child
+$\mathit{currConf}$ will be returned by function \textsc{UnresolvedConflict}. The
+unresolved conflict is then used for expanding $\mathit{Cand}$ (Line 21). All child
 candidates returned by function \textsc{ExpandOnConflictAndAllocateRisk} resolve
-$currCFT$ while satisfying the chance constraints. The function also computes
+$\mathit{currConf}$ while satisfying the chance constraints. The function also computes
 the risk allocation over probabilistic temporal durations for each candidate,
 which is added back to the queue for future evaluation and expansion.
 
 
-If $Cand$ resolves all known conflicts, BCDR-C will proceed to check the
+If $\mathit{Cand}$ resolves all known conflicts, BCDR-C will proceed to check the
 controllability of its grounded CCTPU (function \textsc{ControllabilityCheck},
-Line 8). BCDR-C(SC) implements this function with a strong controllability checking algorithm, while BCDR-C(DC)'s function implements dynamic controllability checking. If the grounded network passes the check, $Cand$ will be returned as the best resolution to the
+Line 8). BCDR-C(SC) implements this function with a strong controllability checking algorithm, while BCDR-C(DC)'s function implements dynamic controllability checking. If the grounded network passes the check, $\mathit{Cand}$ will be returned as the best resolution to the
 cc-pCCTP (Line 12). Otherwise, a new conflict will be returned by this function
-and recorded for expanding candidates (Line 14). $Cand$ will also be added back
+and recorded for expanding candidates (Line 14). $\mathit{Cand}$ will also be added back
 to $Q$ since it now has an unresolved conflict (Line 15).
 
 Similar to BCDR and BCDR-U, every solution returned by BCDR-C is valid in that
@@ -2507,7 +2510,7 @@ are given in Problem \ref{prob:conflict_resolution_cc}.
 	s.t. 	&\phantom{=}	lb'_{pj} - ub'_{pj} < 0   \label{eqn:prob_bds}\\
 	&\phantom{=} lb_i'-lb_i \leq 0, \quad ub_i'-ub_i \geq 0; \label{eqn:relax_req}\\
 	&\phantom{=} Conflict_1 \geq 0; \phantom{=} Conflict_2 \geq 0;  ... \phantom{=} Conflict_m \geq 0; \label{eqn:conf_res_cc}\\
-	&\phantom{=}	\sum_{rd\in R_d}\textsc{Risk}(lb'_{pj},ub'_{pj}) \leq \Delta'_t, \quad \Delta'_t \in \left[\Delta_t,1\right) \label{eqn:cc}
+	&\phantom{=}	\sum_{r_j\in R_d}\textsc{Risk}(lb'_{pj},ub'_{pj}) \leq \Delta'_t, \quad \Delta'_t \in \left[\Delta_t,1\right) \label{eqn:cc}
 	\end{align}
 	\label{prob:conflict_resolution_cc}
 \end{problem}
@@ -2671,7 +2674,7 @@ presented in earlier sections is wrapped inside the function \textsc{BCDR}.
 \textsc{Reactive BCDR} starts with querying \textsc{BCDR} for a solution to the
 given temporal problem, either a CCTP, a CCTPU or a cc-pCCTP (Line 4). If no
 solution can be found to the problem, the algorithm will signal failure and
-quite (Line 6). Otherwise, the first solution will be presented to the user. If
+quit (Line 6). Otherwise, the first solution will be presented to the user. If
 the user accepts it, \textsc{Reactive BCDR} will return the solution and
 terminate (Line 8). If the user rejects it, it will prompt the user for
 additional inputs, and encode them into conflicts using the three rules (Line
@@ -2748,7 +2751,7 @@ point are all identical. The continuous relaxation generated by the
 the checker to re-discover it again and again. This problem is more often
 observed on problems with highly connected constraints, which require a large
 amount of reduction during DC checking and increases the chance of numerical
-precision issues.
+precision issues. Here we do not require the input constraint bounds to be integer or rational values, which will be discussed later in this section as possible resolutions.
 
 
 We use the example from \ref{fig:dc_reduction4} to demonstrate this problem.
@@ -2942,16 +2945,16 @@ may not be necessary for generating the optimal relaxation.
 The greedy approach requires very minimum modification to BCDR: instead of
 formulating and solving the optimization problem in \textsc{ExpandOnConflict}, we compute the greedy relaxations here. Inside
 \textsc{ExpandOnConflict}, Line 16 to Line 22 (Algorithm \ref{alg:ExpandOnConflict}) are replaced with a new procedure
-that only looks at the new conflict $currCFT$  (Algorithm \ref{alg:ExpandOnConflict_greedy}), instead of all conflicts that
+that only looks at the new conflict $\mathit{currConf}$  (Algorithm \ref{alg:ExpandOnConflict_greedy}), instead of all conflicts that
 were previously resolved continuously. The
 greedy relaxation procedure iterates through all constraints in the conflict
 and checks if any constraints involved are relaxable (Line 16-17). If such a
 constraint is identified, it will relax its bounds, either lower or upper, to
 the maximum extent or to the extent that the conflict is eliminated, whichever
 is smaller (Line 18). The initial value of the conflict's linear expression is
-captured by the variable $Offset$, and the conflict is resolved once the
+captured by the variable $\mathit{Offset}$, and the conflict is resolved once the
 variable is made zero or negative. If one constraint cannot provide enough
-deviation, the procedure will move on to the next one, until $Offset$ is made
+deviation, the procedure will move on to the next one, until $\mathit{Offset}$ is made
 zero or less. If the loop completes but the offset is still positive, it means
 that no continuous relaxation is available for resolving the new conflict, and
 the continuous relaxation candidate will not be generated.
@@ -2961,17 +2964,17 @@ the continuous relaxation candidate will not be generated.
 	\setcounter{AlgoLine}{15}
 	\nonl ... ...\\
 	\nonl \textbf{Initialize}\\
-	\nonl {$Offset\leftarrow$ 0 - \textsc{EvalExp($currCFT$)}};  amount of relaxation that need to be applied for resolving the conflict continuously\;
+	\nonl {$\mathit{Offset}\leftarrow$ 0 - \textsc{EvalExp($\mathit{currConf}$)}};  amount of relaxation that need to be applied for resolving the conflict continuously\;
 	\nonl ... ...\\
-	\For{$c \in currCFT$}{
+	\For{$c \in \mathit{currConf}$}{
 		\If{\textsc{isRelaxable($c$)}}{
-			$r = \textsc{Min}(Offset,\textsc{RelaxationLimit}(c))$\;
+			$r = \textsc{Min}(\mathit{Offset},\textsc{RelaxationLimit}(c))$\;
 			$R_{new} \leftarrow R_{new} \cup \{\langle c,\textsc{LB}(c)-r,0\rangle \}$ or $\{\langle c,0,\textsc{UB}(c)+r\rangle \}$\;	
-			$Offset = Offset - r$\;
+			$\mathit{Offset} = \mathit{Offset} - r$\;
 		}
-		\If{\textsc{$Offset \leq 0$}}{
-			$Cand_{new}\leftarrow\langle A,R_{new},C_r,C_{cont}\rangle $\;
-			$newCands\leftarrow newCands\cup Cand_{new}$\;
+		\If{\textsc{$\mathit{Offset} \leq 0$}}{
+			$\mathit{Cand_{new}}\leftarrow\langle A,R_{new},C_r,C_{cont}\rangle $\;
+			$\mathit{newCands}\leftarrow \mathit{newCands}\cup \mathit{Cand_{new}}$\;
 			break;
 		}
 	}
@@ -2995,13 +2998,13 @@ continuous relaxation.
 \begin{algorithm}[htb!]
 \setcounter{AlgoLine}{9}
 \nonl ... ...\\
-$newCFT\leftarrow$\textsc{ConsistencyCheck}$(cand)$\;
-\If{$newCFT==null$}{
+$\mathit{newConf}\leftarrow$\textsc{ConsistencyCheck}$(\mathit{Cand})$\;
+\If{$\mathit{newConf}==null$}{
 	\eIf{\textsc{HasGreedyRelaxation}($cand$)}{
-		$cand_{opt} \leftarrow$ \textsc{RefineRelaxation}($cand$)\;
+		$cand_{opt} \leftarrow$ \textsc{RefineRelaxation}($\mathit{Cand}$)\;
 		$Q\leftarrow Q\cup \{cand_{opt}\}$\;
 	}{
-		\Return $Cand$\;
+		\Return $\mathit{Cand}$\;
 	}	
 }
 \nonl ... ... \\
@@ -3831,8 +3834,7 @@ seconds). For each test run, we recorded the computation times of both approache
 
 
 The results are shown in Figure \ref{fig:rcpsp_results}: each data point in the
-graph represents the averaged runtime for one problem over five test runs, and
-the error bars indicate the standard deviations of the five runtimes. Similar to
+graph represents the averaged runtime for one problem over five test runs. Similar to
 the results from the previous experiments, BCDR-U(DC) is very effective for solving
 these problems when compared with the MIP/Gurobi approach, which is about one
 order of magnitude slower on most test problems.
