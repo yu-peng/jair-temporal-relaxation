@@ -15,6 +15,7 @@
 \usepackage{slashbox}
 \usepackage{enumerate}
 \usepackage{array}
+
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
@@ -178,7 +179,7 @@ execution policy for events in these problems.
 
 A preliminary version of several sections in this article appeared in the
 proceedings of prior International Joint Conference on Artificial Intelligence \cite{Yu_BCDR_2013},  International Conference on Automated Planning and Scheduling
-\cite{Yu_CDRU_2014,cui2015optimising} and AAAI Conference on Artificial Intelligence \cite{Yu_AAAI_2015}.
+\cite{Yu_CDRU_2014,cui2015optimising} and AAAI Conference on Artificial Intelligence \cite{Fang_AAAI_2014,Yu_AAAI_2015}.
 This paper unifies and extends their presentation as follows: (1) a unified
 definition for temporal relaxation problems involving a) conditional temporal
 constraints, b) set-bounded uncertain duration and c) probabilistic uncertain
@@ -329,16 +330,16 @@ time.
    	\centering
     \begin{subfigure}[b]{0.45\textwidth}
 	    \centering
-        \includegraphics[width=0.975\textwidth]{figures/atlantis.pdf}
-        \caption{Research Vessel, Atlantis}
-        \label{fig:atlantis}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.45\textwidth}
-	    \centering
        \includegraphics[width=\textwidth]{figures/sentry.pdf}
        \caption{Autonomous Underwater Vehicle, Sentry}
        \label{fig:sentry}
     \end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.975\textwidth]{figures/atlantis.pdf}
+		\caption{Research Vessel, Atlantis}
+		\label{fig:atlantis}
+	\end{subfigure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
 	     \includegraphics[width=0.97\textwidth]{figures/asphalt_domes.pdf}
@@ -407,35 +408,30 @@ and B, methane seep sites X, Y, and Z).
 
 \begin{table}[h!]	
 	\centering
-	\begin{tabular}{| m{5.0cm} m{4.0cm} m{5.0cm} m{4.0cm} m{2.0cm}|}
+	\begin{tabular}{| m{4.2cm} m{4.2cm} m{4.5cm}|}
 		\hline
-		\multicolumn{5}{|c|}{\textbf{Constraints (in minutes)}} \\
+		\multicolumn{3}{|c|}{\textbf{Constraints (in minutes)}} \\
 		\hline		
-		\multicolumn{2}{|l}{$C_1$(R):$A_L$-$A_A\in[50,60]$} &
-		\multicolumn{2}{l}{$C_6$:$A_A$-$S\in[45,65]$} & $AM \leftarrow A$ \\ 
-		\multicolumn{2}{|l}{$C_2$(R):$B_L$-$B_A\in[45,60]$} &
-		\multicolumn{2}{l}{$C_7$:$B_A$-$S\in[30,50]$} & $AM \leftarrow B$ \\ 
-		\multicolumn{2}{|l}{$C_3$(R):$X_L$-$X_A\geq60$} &
-		\multicolumn{2}{l}{$C_8$:$E$-$X_L\in[28,35]$} & $MS \leftarrow X$ \\ 
-		\multicolumn{2}{|l}{$C_4$(R):$Y_L$-$Y_A\geq65$} &
-		\multicolumn{2}{l}{$C_9$:$E$-$Y_L\in[30,32]$} & $MS \leftarrow Y$ \\ 
-		\multicolumn{2}{|l}{$C_5$(R):$Z_L$-$Z_A\geq100$} &
-		\multicolumn{2}{l}{$C_{10}$:$E$-$Z_L\in[50,60]$} & $MS \leftarrow Z$ \\ 
+		$C_1$(R):$A_L$-$A_A\in[50,60]$ & $C_6$:$A_A$-$S\in[45,65]$ & $AM \leftarrow A$ \\ 
+		$C_2$(R):$B_L$-$B_A\in[45,60]$ & $C_7$:$B_A$-$S\in[30,50]$ & $AM \leftarrow B$ \\ 
+		$C_3$(R):$X_L$-$X_A\geq60$ & $C_8$:$E$-$X_L\in[28,35]$ & $MS \leftarrow X$ \\ 
+		$C_4$(R):$Y_L$-$Y_A\geq65$ & $C_9$:$E$-$Y_L\in[30,32]$ & $MS \leftarrow Y$ \\ 
+		$C_5$(R):$Z_L$-$Z_A\geq100$ & $C_{10}$:$E$-$Z_L\in[50,60]$ & $MS \leftarrow Z$ \\ 
 		\hline
-		\multicolumn{3}{|l}{$C_{11}$:$X_A$-$A_L\in[51,54]$} & \multicolumn{2}{c|}{$AM
-			\leftarrow A$ and $MS \leftarrow X$} \\ 
-		\multicolumn{3}{|l}{$C_{12}$:$Y_A$-$A_L\in[42,45]$} & \multicolumn{2}{c|}{$AM
-			\leftarrow A$ and $MS \leftarrow Y$} \\ 
-		\multicolumn{3}{|l}{$C_{13}$:$Z_A$-$A_L\in[30,55]$} & \multicolumn{2}{c|}{$AM
-			\leftarrow A$ and $MS \leftarrow Z$} \\ 
-		\multicolumn{3}{|l}{$C_{14}$:$X_A$-$B_L\in[22,24]$} & \multicolumn{2}{c|}{$AM
-			\leftarrow B$ and $MS \leftarrow X$} \\ 
-		\multicolumn{3}{|l}{$C_{15}$:$Y_A$-$B_L\in[21,25]$} & \multicolumn{2}{c|}{$AM
-			\leftarrow B$ and $MS \leftarrow Y$} \\ 
-		\multicolumn{3}{|l}{$C_{16}$:$Z_A$-$B_L\in[30,35]$} & \multicolumn{2}{c|}{$AM
-			\leftarrow B$ and $MS \leftarrow Z$} \\ \hline
+		\multicolumn{2}{|c}{$C_{11}$:$X_A$-$A_L\in[51,54]$} & $AM
+			\leftarrow A$ and $MS \leftarrow X$ \\ 
+		\multicolumn{2}{|c}{$C_{12}$:$Y_A$-$A_L\in[42,45]$} &$AM
+			\leftarrow A$ and $MS \leftarrow Y$ \\ 
+		\multicolumn{2}{|c}{$C_{13}$:$Z_A$-$A_L\in[30,55]$} & $AM
+			\leftarrow A$ and $MS \leftarrow Z$ \\ 
+		\multicolumn{2}{|c}{$C_{14}$:$X_A$-$B_L\in[22,24]$} & $AM
+			\leftarrow B$ and $MS \leftarrow X$ \\ 
+		\multicolumn{2}{|c}{$C_{15}$:$Y_A$-$B_L\in[21,25]$} & $AM
+			\leftarrow B$ and $MS \leftarrow Y$ \\ 
+		\multicolumn{2}{|c}{$C_{16}$:$Z_A$-$B_L\in[30,35]$} & $AM
+			\leftarrow B$ and $MS \leftarrow Z$ \\ \hline
 		
-		\multicolumn{5}{|l|}{$C_{17}$(R):$E$-$S\in[0,180]$}
+		\multicolumn{2}{|c}{$C_{17}$(R):$E$-$S\in[0,180]$} & 
 		\\
 		\hline
 	\end{tabular}
@@ -459,10 +455,10 @@ and B, methane seep sites X, Y, and Z).
 
 
 Table \ref{table:constraints} shows all the conditional constraints in the CCTP
-that encode the temporal relaxations between events. A subset of these constraints only hold for some choices, such as the duration of survey at site A ($C_1$) for assignment $AM\leftarrow A$. We represent this by saying that constraint $C_1$ is $ACTIVE$ only when the choice $AM\leftarrow A$ is made, and indicate this by labeling the constraint with $AM\leftarrow A$.  The constraint is called conditional, and the label is called the guard of the constraint. In this problem, constraints $C_1$ through
-$C_5$ are inequality constraints that represent Rich's desired length of survey at
-five locations. For example, $B_L$--$B_A\geq35$ indicates that Rich would like
-Sentry to spend at least 35 minutes at asphalt mound site B. These constraints are labeled
+that encode the temporal relaxations between events. A subset of these constraints only hold for some choices, such as the duration of survey at site A ($C_1$) for assignment $AM\leftarrow A$. We represent this by saying that constraint $C_1$ is $ACTIVE$ only when the choice $AM\leftarrow A$ is made, and indicate this by labeling the constraint with $AM\leftarrow A$.  The label is called the guard of the conditional constraint. In this problem, constraints $C_1$ through
+$C_5$ represent Rich's desired length of survey at
+five locations. For example, $B_L$--$B_A\in [45,60]$ indicates that Rich would like
+Sentry to spend between 45 and 60 minutes at asphalt mound site B. These constraints are labeled
 by the assignments made to the decision variables: a constraint is activated
 only if its label assignment is made. For example, $C_2$ will be considered only
 if Rich chooses to visit site $B$, as shown in the right side of Table
@@ -507,7 +503,7 @@ bounds).
 		\hline
 		\textbf{Relaxation 1} & & \textbf{Relaxation 2} & & \textbf{Relaxation 3} \\
 		\hline
-		$AM \leftarrow B$ &  \multirow{5}{*}{\parbox{2cm}{Rich told\\ system\\ \textbf{"Do not\\ relax $C_{17}$"}}}  & $AM \leftarrow B$ & \multirow{5}{*}{\parbox{2cm}{Rich told\\ system\\ \textbf{"$C_{2}$ is at\\ least 44"}}}  & $AM \leftarrow B$ \\
+		$AM \leftarrow B$ &  \multirow{5}{*}{\parbox{2cm}{Rich told\\ system\\ \textbf{``Do not\\ relax $C_{17}$"}}}  & $AM \leftarrow B$ & \multirow{5}{*}{\parbox{2cm}{Rich told\\ system\\ \textbf{``$C_{2}$ is at\\ least 44"}}}  & $AM \leftarrow B$ \\
 		$MS \leftarrow Y$ & & $MS \leftarrow X$ & & $MS \leftarrow Y$ \\
 		$C_2$ to $\in[39,60]$ & & $C_3$ to $\geq57.5$ & & $C_4$ to $\geq55$ \\
 		$C_{17}$ to $\in[0,185]$ & & $C_2$ to $\in[42.5,60]$ & & $C_2$ to $\in[44,60]$ \\
@@ -828,45 +824,23 @@ node-arc graph, in which uncontrollable durations are represented by double arcs
 
 \begin{table}[ht!]	
 	\centering
-	\begin{tabular}{| m{3.0cm} m{3.0cm} m{3.0cm} m{3.0cm} m{2.0cm}|}
-		
-		\hline		
-		\multicolumn{2}{|l}{$C_1(R)$:$A_L$-$A_A\in [50,60]$} &
-		\multicolumn{2}{l}{$\mathbf{C_6}$:$A_A$-$S\in[45,65]$} & $AM \leftarrow A$
-		\\ 
-		\multicolumn{2}{|l}{$C_2(R)$:$B_L$-$B_A\in [45,60]$} &
-		\multicolumn{2}{l}{$\mathbf{C_7}$:$B_A$-$S\in[30,50]$} & $AM \leftarrow B$
-		\\ 
-		\multicolumn{2}{|l}{$C_3(R)$:$X_L$-$X_A\geq60$} &
-		\multicolumn{2}{l}{$\mathbf{C_8}$:$E$-$X_L\in[28,35]$} & $MS \leftarrow X$
-		\\ 
-		\multicolumn{2}{|l}{$C_4(R)$:$Y_L$-$Y_A\geq65$} &
-		\multicolumn{2}{l}{$\mathbf{C_9}$:$E$-$Y_L\in[30,32]$} & $MS \leftarrow Y$
-		\\ 
-		\multicolumn{2}{|l}{$C_5(R)$:$Z_L$-$Z_A\geq100$} &
-		\multicolumn{2}{l}{$\mathbf{C_{10}}$:$E$-$Z_L\in[50,60]$} & $MS \leftarrow
-		Z$ \\ 
+	\begin{tabular}{| m{4.2cm} m{4.2cm} m{4.5cm}|}
 		\hline
-		\multicolumn{3}{|l}{$\mathbf{C_{11}}$:$X_A$-$A_L\in[51,54]$} &
-		\multicolumn{2}{c|}{$AM
-			\leftarrow A$ and $MS \leftarrow X$} \\ 
-		\multicolumn{3}{|l}{$\mathbf{C_{12}}$:$Y_A$-$A_L\in[42,45]$} &
-		\multicolumn{2}{c|}{$AM
-			\leftarrow A$ and $MS \leftarrow Y$} \\ 
-		\multicolumn{3}{|l}{$\mathbf{C_{13}}$:$Z_A$-$A_L\in[30,55]$} &
-		\multicolumn{2}{c|}{$AM
-			\leftarrow A$ and $MS \leftarrow Z$} \\ 
-		\multicolumn{3}{|l}{$\mathbf{C_{14}}$:$X_A$-$B_L\in[22,24]$} &
-		\multicolumn{2}{c|}{$AM
-			\leftarrow B$ and $MS \leftarrow X$} \\ 
-		\multicolumn{3}{|l}{$\mathbf{C_{15}}$:$Y_A$-$B_L\in[21,25]$} &
-		\multicolumn{2}{c|}{$AM
-			\leftarrow B$ and $MS \leftarrow Y$} \\ 
-		\multicolumn{3}{|l}{$\mathbf{C_{16}}$:$Z_A$-$B_L\in[30,35]$} &
-		\multicolumn{2}{c|}{$AM
-			\leftarrow B$ and $MS \leftarrow Z$} \\ \hline
-		\multicolumn{5}{|l|}{$C_{17}(R)$:$E$-$S\in[0,180]$}
-		\\
+		\multicolumn{3}{|c|}{\textbf{Constraints and Uncertain Durations (in minutes)}} \\		
+		\hline		
+		$C_1(R)$:$A_L$-$A_A\in [50,60]$ & $\mathbf{C_6}$:$A_A$-$S\in[45,65]$ & $AM \leftarrow A$ \\ 
+		$C_2(R)$:$B_L$-$B_A\in [45,60]$ & $\mathbf{C_7}$:$B_A$-$S\in[30,50]$ & $AM \leftarrow B$ \\ 
+		$C_3(R)$:$X_L$-$X_A\geq60$ & $\mathbf{C_8}$:$E$-$X_L\in[28,35]$ & $MS \leftarrow X$ \\ 
+		$C_4(R)$:$Y_L$-$Y_A\geq65$ & $\mathbf{C_9}$:$E$-$Y_L\in[30,32]$ & $MS \leftarrow Y$ \\ 
+		$C_5(R)$:$Z_L$-$Z_A\geq100$ & $\mathbf{C_{10}}$:$E$-$Z_L\in[50,60]$ & $MS \leftarrow Z$ \\ 
+		\hline
+		\multicolumn{2}{|c}{$\mathbf{C_{11}}$:$X_A$-$A_L\in[51,54]$} & $AM \leftarrow A$ and $MS \leftarrow X$ \\ 
+		\multicolumn{2}{|c}{$\mathbf{C_{12}}$:$Y_A$-$A_L\in[42,45]$} & $AM \leftarrow A$ and $MS \leftarrow Y$ \\ 
+		\multicolumn{2}{|c}{$\mathbf{C_{13}}$:$Z_A$-$A_L\in[30,55]$} & $AM \leftarrow A$ and $MS \leftarrow Z$ \\ 
+		\multicolumn{2}{|c}{$\mathbf{C_{14}}$:$X_A$-$B_L\in[22,24]$} & $AM \leftarrow B$ and $MS \leftarrow X$ \\ 
+		\multicolumn{2}{|c}{$\mathbf{C_{15}}$:$Y_A$-$B_L\in[21,25]$} & $AM \leftarrow B$ and $MS \leftarrow Y$ \\ 
+		\multicolumn{2}{|c}{$\mathbf{C_{16}}$:$Z_A$-$B_L\in[30,35]$} & $AM \leftarrow B$ and $MS \leftarrow Z$ \\ \hline
+		\multicolumn{2}{|c}{$C_{17}(R)$:$E$-$S\in[0,180]$} & \\
 		\hline
 	\end{tabular}
 	\caption{Temporal constraints and uncertain duration in Rich's mission CCTPU}
@@ -1094,11 +1068,12 @@ before, Rich wants the mission to complete in 3 hours, with less than 5\% risk
 of violating \textbf{any} constraint, such as returning late or missing the event. We
 can capture this problem using a cc-pCCTP (Figure \ref{fig:sample_ccpctp}).
 
-
 \begin{table}[ht!]	
 	\centering
 	\caption{Temporal constraints and uncertain duration in Rich's mission cc-pSTP}
 	\begin{tabular}{| m{1.5cm} m{4.5cm}  m{1.7cm} m{6.0cm}|}		
+		\hline
+		\multicolumn{4}{|c|}{\textbf{Constraints and Uncertain Durations (in minutes)}} \\		
 		\hline		
 		$C_{1}$ & $X_A$-$S > [45,+\infty]$ & $MS \leftarrow X$ & Traversal to methane seeps site X\\
 		$C_{2}$ & $X_{sp}$-$X_A\in[0,+\infty]$ & $MS \leftarrow X$ & Wait for seeps at site X \\
@@ -1402,7 +1377,7 @@ introduction of continuous conflicts, to focus this relaxation process.
 
 
 We start this section with an overview of the conflict-directed relaxation
-framework, and how it applies to the Controllable Conditional Temporal Problems
+framework, and how it applies to Controllable Conditional Temporal Problems
 (CCTPs). This is the simplest of the problems addressed in this paper, since all
 its constraints have controllable temporal bounds. We focus on the conflict-directed framework that allows BCDR to iteratively discover conflicts, and resolve them using both discrete and continuous relaxations. 
 
@@ -1431,7 +1406,7 @@ over-constrained temporal problems. We present two version of the extension, nam
 
 
 Third, we present another extension to BCDR for resolving chance-constrained
-temporal problems (cc-pCCTPs). We name the extension BCDR-C, in which 'C'
+temporal problems (cc-pCCTPs). We name the extension BCDR-C, in which `C'
 represents chance constraints. The key idea introduced in resolving cc-pCCTPs is
 to resolve infeasibility for risk-bounded scheduling problems, by allowing the
 risk bound, as well as the temporal constraints, to be relaxed continuously. The
@@ -1690,7 +1665,7 @@ guard assignments as discrete conflicts.
 \begin{mydef}
 	A discrete conflict is a pair $\langle E,Guards\rangle$, where:
 	\begin{itemize}
-		\item $E$ is a set of conflicting constraint in the CCTP;
+		\item $E$ is a set of conflicting constraints in the CCTP;
 		\item $Guards$ is the set of guards assignments for all constraints in $E$;
 	\end{itemize}
 \end{mydef}
@@ -1729,7 +1704,7 @@ assignments.
 \end{mydef}
 
 
-Each negative cycle in the $NCycles$ set is represented by a linear expressions.
+Each negative cycle in the $NCycles$ set is represented by a linear expression.
 It represents a necessary constituent of the conflict, and is defined over the
 lower and upper temporal bounds of episodes, with integer coefficients. BCDR
 learns new conflicts iteratively from grounded CCTPs with different choices made.
@@ -1841,7 +1816,7 @@ new candidates using the resolutions to the conflict (Algorithm
 First, we generate resolutions for the conflict by negating variable assignments
 (Line 4-15). If a variable $p_i$ is conditioned on other assignments, in
 addition to flipping the assignment to $p_i$, we can also negate its guards. This
-deactivates the variable and resolves the conflict. Assuming that we have to make an additional decision on the imaging method, using either stereo camera or mono camera, for imaging methane seeps site Y. Then for a conflict that involves assignment $\mathit{IMAGE_Y=STEREO}$, given tha we know variable $\mathit{IMAGE_Y}$ has label $MS=Y$, we can resolve the conflict by flipping the assignment to either $\mathit{IMAGE_Y}$ or $MS$: $\mathit{IMAGE_Y=MONO}$, $MS$=$X$ or $MS$=$Z$.
+deactivates the variable and resolves the conflict. Assuming that we have to make an additional decision on the imaging method, using either stereo camera or mono camera, for imaging methane seeps site Y. Then for a conflict that involves assignment $\mathit{IMAGE_Y=STEREO}$, given that we know variable $\mathit{IMAGE_Y}$ has label $MS=Y$, we can resolve the conflict by flipping the assignment to either $\mathit{IMAGE_Y}$ or $MS$: $\mathit{IMAGE_Y=MONO}$, $MS$=$X$ or $MS$=$Z$.
 
 
 In the second stage, we compute the optimal continuous relaxation to the
@@ -1907,8 +1882,7 @@ durations, such as CCTPUs, the consistency-based approach cannot find relaxation
 that is robust to all possible outcomes of the uncertainty. Here, we
 present the extension for conflict learning and resolution procedures that
 accounts for uncontrollable duration, which allows BCDR to enumerate strongly
-and dynamically controllable relaxations for CCTPUs. The changes are highlighted
-in Algorithm \ref{alg:bcdr_controllability}. First, \textsc{ControllabilityCheck} replaces the consistency check in BCDR
+and dynamically controllable relaxations for CCTPUs. These changes are presented in Algorithm \ref{alg:bcdr_controllability}. First, \textsc{ControllabilityCheck} replaces the consistency check in BCDR
 presented earlier. Depending on the type of solution required, it checks either
 strong or dynamic controllability, and returns a conflict if the candidate
 fails the test. The key is to learn conflicts from strong and dynamic
@@ -1944,7 +1918,7 @@ tightening uncertain constraints.
 		$\mathit{currConf}\leftarrow$\textsc{UnresolvedConflicts}$(\mathit{Cand},C)$\;
 		\eIf{$\mathit{currConf}==null$}{
 			\eIf{isComplete?$(\mathit{Cand},U)$}{
-				$\mathit{newConf}\leftarrow$\textbf{\textsc{ControllabilityCheck}}$(\mathit{Cand})$;\\
+				$\mathit{newConf}\leftarrow$\textsc{ControllabilityCheck}$(\mathit{Cand})$;\\
 				\eIf{$\mathit{newConf}==null$}{
 					\Return $\mathit{Cand}$\;
 				}{
@@ -1955,7 +1929,7 @@ tightening uncertain constraints.
 		$Q\leftarrow Q\cup$\textsc{ExpandOnVariable}($\mathit{Cand},U$);\\
 	}
 }{
-$Q\leftarrow$ $Q\cup$\textbf{\textsc{ExpandOnConflict}}($\mathit{Cand},\mathit{currConf}$);\\
+$Q\leftarrow$ $Q\cup$\textsc{ExpandOnConflict}($\mathit{Cand},\mathit{currConf}$);\\
 }
 }
 \Return $null$\;
@@ -2592,15 +2566,15 @@ solution, three types of inputs can be accepted by BCDR:
 \begin{itemize}
 	
 	
-	\item Rejection of an assignment, such as "I do not want to visit the methane seeps
+	\item Rejection of an assignment, such as ``I do not want to visit the methane seeps
 	site X".
 	
 	
-	\item Rejection of a continuous temporal relaxation, such as "The mission duration must be
+	\item Rejection of a continuous temporal relaxation, such as ``The mission duration must be
 	within 4 hours".
 	
 	
-	\item Rejection of a chance constraint relaxation, such as "I cannot take more
+	\item Rejection of a chance constraint relaxation, such as ``I cannot take more
 	than a 5\% risk of violating any constraints".
 	
 \end{itemize}
@@ -3429,7 +3403,7 @@ major challenge for reliable transit service.
 This problem has been investigated by many researchers in operation research,
 and \citeA{bellei2010transit} presents more details about it. Here we present a
 simple example, constructed based on an SBS Transit article on bus
-bunching\footnote{'Sometimes, two buses of the same service arrive at the same
+bunching\footnote{`Sometimes, two buses of the same service arrive at the same
 time with one bus being overcrowded and the other almost empty. Why?',
 \url{http://www.sbstransit.com.sg/doyouknow/facts_bus.aspx.}}, to explain this
 problem. Assume that three three vehicles are running in 8-minute intervals and
