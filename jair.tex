@@ -256,7 +256,7 @@ handling temporal problems with the following three types of constraints:
 
 \begin{itemize}
 	
-	\item Simple temporal constraints where the duration between lower and upper
+	\item Simple temporal constraints \cite{Dechter_TCN_1991} where the duration between lower and upper
 	bounds are controllable. This type is often used for modeling requirements
 	between temporal events. For example, to get home in 40 minutes, given that the
 	subway takes 35 minutes, we know for sure that the requirement can be met.
@@ -612,7 +612,7 @@ differences.
 
 
 First, CCTPs assume that all real-valued variables (events) and finite-domain
-variables (choices) are controllable. Consequently, to determine the consistency
+variables (choices) are controllable, meaning that they are under the control of the agent. Consequently, to determine the consistency
 of a CCTP, it is sufficient to have a single interpretation that satisfies all
 activated constraints, where an interpretation is a set of assignments to all discrete and
 continuous variables.
@@ -637,10 +637,10 @@ domain. In addition, it allows the discrete variables to be guarded by a set of 
 	A CCTP is a 9-tuple $\langle P, Q, V, E, RE, L_e, L_p, f_p, f_e\rangle$, where:
 	\begin{itemize}
 		
-		\item $P$ is a set of controllable finite domain discrete variables;
+		\item $P$ is a set of controllable guarded finite domain variables;
 		\item $Q$ is the collection of assignments to $P$;
 		\item $V$ is a set of events representing designated time points;
-		\item $E$ is a set of temporal constraints between pairs of events $v_i\in V$;
+		\item $E$ is a set of guarded temporal constraints between pairs of events $v_i\in V$;
 		\item $RE \subseteq E$ is a set of relaxable constraints whose temporal bounds can be
 		relaxed;
 		\item $L_e:E \rightarrow 2^Q$ is a function that attaches conjunctions of
@@ -715,8 +715,10 @@ $u_{ij}^{\prime}-u_{ij}$.
 The cost function for temporal constraints that restrict the lower bounds
 between two events is $f_{eij}(l_{ij}-l_{ij}^{\prime})$. This is illustrated in
 Figure \ref{fig:sample_pref1}a. We assume that the user always prefers smaller
-relaxations. The motivation of this assumption is that people generally prefer
-to minimize the perturbations to the original requirements, and penalize larger
+relaxations: the values in the original constraints are equally and maximally
+preferred, and the preferences decreases as one moves away from the original
+bounds. The motivation of this assumption is that people generally prefer to
+minimize the perturbations to the original requirements, and penalize larger
 deviations from them. Therefore, all $f_e$ functions must be monotonically
 increasing, and equal to 0 when there is no relaxation. $f_e$ can be viewed as a
 semi-convex \cite{Khatib01temporalconstraint} function with a segment of zero
@@ -810,7 +812,9 @@ Controllable Conditional Temporal Problem with Uncertainty (CCTPU) formalism; an
 extension to the CCTP formulation, for modeling relaxation problems with
 uncertain duration. Their definitions differ only in the terms of constraints:
 in addition to temporal constraints with controllable durations, a CCTPU may also
-contain uncertain durations.
+contain uncertain durations. This is similar to
+to the generalization from STPPs to the Simple Temporal Problems with Preferences and Uncertainty (STPPUs) framework
+\cite{rossi2006uncertainty}, which adds support for modeling contingent events and uncertain durations.
 
 
 We use Rich's mission to illustrate the modeling of relaxation problems
@@ -1006,7 +1010,7 @@ Formally, the CCTPU formulation extends the CCTP definition with three additiona
 	\begin{itemize}
 		\item $V_r\subseteq V$ is a set of received events. $V\backslash V_r$ is the
 set of all activated events; 
-		\item $E_u\subseteq E$ is a set of uncertain duration between pairs of
+		\item $E_u\subseteq E$ is a set of guarded uncertain duration between pairs of
 activated and received events. $E\backslash E_u$ is the set of all free constraints;
 		\item $RE_u\subseteq E_u$ is a set of relaxable uncertain durations whose
 		bounds can be tightened, and $RE_u\subseteq RE$.
@@ -1358,7 +1362,7 @@ we also define a chance-constrained analogue to the CCTPU, the chance-constraine
 	A cc-pCCTP contains all elements in a CCTPU (Definition \ref{def:CCTPU}), with the following differences:
 	
 	\begin{itemize}
-		\item instead of $E_u\subseteq E$, a set of uncertain duration between pairs of
+		\item instead of $E_u\subseteq E$, a set of guarded uncertain duration between pairs of
 activated and received events in CCTPU, the cc-pCCTP features a set of probabilistic uncertain durations $E_d$. Each $d_{xy}\in
 			E_d$ is a random variable describing the difference $(y-x)$ between an activated 
 			event and a received event, where $x\in V_a$ and $y\in V_r$;
@@ -1892,7 +1896,7 @@ In this example, BCDR will generate three constituent relaxations for the hybrid
 conflict: two new assignments derived from flipping guard assignments, and one
 set of continuous relaxations for the temporal bounds. They are used to extend
 the partial candidates so that future extensions of it will not run into the same
-conflict again, as demonstrated in Figure \ref{fig:ExpandOnConflict}.
+conflict again, as demonstrated in Figure \ref{fig:ExpandOnConflict}. When there are multiple unresolved conflicts for a candidate, BCDR is set to expand on the conflict with the least amount of variable assignments first (implemented in function \textsc{UnresolvedConflicts}): this will produce a smaller set of constituent relaxations, and allow a larger portion of the search space to be pruned.
 
 
 \subsection{BCDR-U: Computing Relaxations that Restore Controllability}
