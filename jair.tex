@@ -985,7 +985,7 @@ Formally, the CCTPU formulation extends the CCTP definition with three additiona
 		\item $V_r\subseteq V$ is a set of received events. $V\backslash V_r$ is the
 set of all activated events; 
 		\item $E_u\subseteq E$ is a set of guarded uncertain duration between pairs of
-activated and received events. $E\backslash E_u$ is the set of all free constraints;
+activated and received events. The temporal bounds of these duration indicate the domain of possible values of the random outcomes. $E\backslash E_u$ is the set of all free constraints;
 		\item $RE_u\subseteq E_u$ is a set of relaxable uncertain durations whose
 		bounds can be tightened, and $RE_u\subseteq RE$.
 	\end{itemize}
@@ -1080,7 +1080,7 @@ can capture this problem using a cc-pCCTP (Figure \ref{fig:sample_ccpctp}).
 		$C_{3}$(R) & $X_L$-$X_{sp}\in[50,60]$ & $MS \leftarrow X$ & Scanning at site X \\ 
 		$C_{4}$ & $E$-$X_L\in[45,+\infty]$ & $MS \leftarrow X$ & Traversal from site X back to ship \\
 		$\mathbf{C_{5}}$ & $X_{sp}$-$S$ = [$\mu=120,\sigma=30$] & $MS \leftarrow X$ & Seeps start time at X \\
-		$C_{6}$ & $B_A$-$S\in[30,+\infty]$ & $MS \leftarrow Y$ & Traversal to methane seeps site Y\\
+		$C_{6}$ & $Y_A$-$S\in[30,+\infty]$ & $MS \leftarrow Y$ & Traversal to methane seeps site Y\\
 		$C_{7}$ & $Y_{sp}$-$Y_A\in[0,+\infty]$ & $MS \leftarrow Y$ & Wait for seeps at site Y \\
 		$C_{8}$(R) & $Y_L$-$Y_{sp}\in[45,60]$ & $MS \leftarrow Y$ & Scanning at site Y \\ 
 		$C_{9}$ & $E$-$Y_L\in[30,+\infty]$ & $MS \leftarrow Y$ & Traversal from site Y back to ship \\
@@ -1552,11 +1552,12 @@ detail. The pseudo code of BCDR is given in Algorithm \ref{alg:bcdr}.
 \SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{endif}
 \Indm
 \Input{A CCTP $T=\langle P,Q,V,E,RE,L_p,L_e,f_p,f_e\rangle $.}
-\Output{A relaxation $\langle A,R\rangle $ that maximizes $f_p-f_e$.}
+\Output{A relaxation $\langle A,R_e,C_r,C_{cont}\rangle $ that maximizes $f_p-f_e$.}
 \Initialize{}
 \Indp{$\mathit{Cand}\leftarrow \langle A,R_e,C_r,C_{cont}\rangle $; the first candidate}\;
 {$Q\leftarrow\{\mathit{Cand}\}$; a priority queue that records candidates}\;
 {$C\leftarrow\{\}$; the set of all known conflicts}\;
+{$\mathit{currConf}\leftarrow \{\}, \mathit{newConf}\leftarrow \{\}$; the unresolved conflict that is being expanded on, and the newly discovered conflict. Each is a list of variable assignments and linear expressions}\;
 {$U\leftarrow V$; the list of unassigned controllable variables}\;
 \Indm
 \Algorithm{}
@@ -1586,8 +1587,8 @@ detail. The pseudo code of BCDR is given in Algorithm \ref{alg:bcdr}.
 \end{algorithm}
 
 BCDR starts with an empty candidate in the queue (Line 1). A candidate, $\mathit{Cand}$,
-is a 4-tuple $\langle A,R,C_r,C_{cont}\rangle $ with assignments $A$, continuous temporal
-relaxations $R$, resolved conflicts $C_r$ and continuously resolved conflicts
+is a 4-tuple $\langle A,R_e,C_r,C_{cont}\rangle $ with assignments $A$, continuous temporal
+relaxations $R_e$, resolved conflicts $C_r$ and continuously resolved conflicts
 $C_{cont}\subseteq C_r$, all being empty lists in the first candidate. BCDR
 continues looping until the first relaxation is found that makes the CCTP
 consistent (Line 11). If BCDR does not find a consistent relaxation until the
@@ -1598,7 +1599,7 @@ input CCTP (Line 24).
 Within each loop, BCDR first dequeues the best partial candidate, $\mathit{Cand}$ (Line
 6). It checks if $\mathit{Cand}$ resolves all known conflicts (Line 7). If not, an
 unresolved conflict $\mathit{currConf}$ will be returned by function
-\textsc{ResolveKnownConflicts?}, which compares the resolved conflicts $C_r$ in
+\textsc{UnresolvedConflicts}, which compares the resolved conflicts $C_r$ in
 $\mathit{Cand}$ with all known conflicts $C$. $\mathit{currConf}$ is then used for expanding $\mathit{Cand}$
 by function \textsc{ExpandOnConflict} (Line 21). The child candidates of $\mathit{Cand}$,
 which includes both discrete and continuous relaxations for the known conflicts,
@@ -1771,8 +1772,8 @@ resolve the conflicts.
 	\SetKwInput{Initialize}{Initialization}
 	\SetKwInput{Algorithm}{Algorithm}
 	\Indm
-	\Input{A candidate to expand $\mathit{Cand}$ $\langle A,R,C_r,C_{cont}\rangle$ and a
-		minimal conflict $\mathit{currConf}$.}
+	\Input{A candidate to expand $\mathit{Cand}$ $\langle A,R,C_r,C_{cont}\rangle$ and an
+		unresolved conflict $\mathit{currConf}$.}
 	\Output{A set of expanded candidates $\mathit{newCands}$.}
 	\Initialize{}
 	\Indp
@@ -1902,13 +1903,14 @@ tightening uncertain constraints.
 	\SetKwInput{Algorithm}{Algorithm}
 	\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{endif}
 	\Indm
-	\Input{\textbf{A CCTPU $T=\langle P,Q,V,V_r,E,E_u,RE,RE_u,L_p,L_e,f_p,f_e\rangle$.}}
-	\Output{Assignments and relaxations $\boldsymbol{\langle A,R_e,R_u\rangle}$ that maximizes $f_p-f_e$.}
+	\Input{A CCTPU $T=\langle P,Q,V,V_r,E,E_u,RE,RE_u,L_p,L_e,f_p,f_e\rangle$.}
+	\Output{Assignments and relaxations $\langle A,R_e,R_u,C_r,C_{cont}\rangle$ that maximizes $f_p-f_e$.}
 	\Initialize{}
 	\Indp{$\mathit{Cand}\leftarrow \langle A,R_e,R_u,C_r,C_{cont}\rangle $; the first
 		candidate}\;
 	{$Q\leftarrow\{\mathit{Cand}\}$; a priority queue that records candidates}\;
 	{$C\leftarrow\{\}$; the set of all known conflicts}\;
+	{$\mathit{currConf}\leftarrow \{\}, \mathit{newConf}\leftarrow \{\}$; the unresolved conflict that is being expanded on, and the newly discovered conflict. Each is a list of variable assignments and linear expressions}\;
 	{$U\leftarrow V$; the list of unassigned controllable variables}\;
 	\Indm
 	\Algorithm{}
@@ -2381,13 +2383,14 @@ modifications from BCDR-U to BCDR-C are the following:
 	\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{endif}
 	\Indm
 	\Input{A cc-pCCTP $\langle P, Q, V, V_r, E, E_d, RE, L_e, L_p, f_p, f_e, \Delta_t,r\Delta_t,f_\Delta\rangle$.}
-	\Output{A solution $\langle A,R_e,\Delta'_t,N_{alloc}\rangle$ that maximize
+	\Output{A solution $\langle A,R_e,\Delta'_t,N_{alloc},C_r,C_{cont}\rangle$ that maximize
 		$f_{p}-f_{e}-f_\Delta$.}
 	\Initialize{}
-	\Indp{$\mathit{Cand}\leftarrow \langle A=\emptyset,R_{e}=\emptyset,\Delta_t,N_{default},C_r=\emptyset\rangle $; the
+	\Indp{$\mathit{Cand}\leftarrow \langle A=\emptyset,R_{e}=\emptyset,\Delta_t,N_{default},C_r=\emptyset,C_{cont}=\emptyset\rangle $; the
 		first candidate with the default risk allocation, and empty sets for assignments, relaxations and continuously resolved conflicts}\;
 	{$Q\leftarrow\{\mathit{Cand}\}$; a priority queue of candidates}\;
 	{$C\leftarrow\{\}$; the set of all known conflicts}\;
+	{$\mathit{currConf}\leftarrow \{\}, \mathit{newConf}\leftarrow \{\}$; the unresolved conflict that is being expanded on, and the newly discovered conflict. Each is a list of variable assignments and linear expressions}\;
 	{$U\leftarrow V$; the list of unassigned controllable variables}\;
 	\Indm
 	\Algorithm{}
@@ -2424,8 +2427,8 @@ in Algorithm \ref{alg:bcdr_chance_constraints}. Similar to the previous two
 versions, we implement BCDR-C with a priority queue for enumerating resolutions
 in best-first order. The algorithm starts with an empty candidate (Line 1) that
 has no assignments or relaxations over temporal constraints ($A$ and $R_{e}$)
-and chance constraint ($\Delta_t$), and an empty set of resolved conflicts
-($C_r$). The candidate is associated with a default risk allocation over all
+and chance constraint ($\Delta_t$), and empty sets of resolved conflicts
+($C_r$) and continuously resolved conflicts ($C_{cont}$). The candidate is associated with a default risk allocation over all
 probabilistic uncertain durations, which is represented by a CCTPU
 ($N_{default}$). The initial allocation is computed from a non-linear solver and
 is conservative enough to satisfy the chance constraint. For example, we can
@@ -2969,7 +2972,7 @@ relaxations (Line 12, Algorithm \ref{alg:bcdr_greedy}). If true, it will refine
 the relaxations using the optimization procedure and generate a new candidate.
 The new candidate will be put back to the queue for further verification, since
 it may not be the best or consistent candidate after the updates to its
-continuous relaxation.
+continuous relaxation. The greedy approach always underestimates the cost of resolving conflicts, ensuring that the heuristic function of BCDR remains admissible. This refinement step corrects such underestimation before returning candidates,  allowing BCDR to enumerate resolutions in best-first order with delayed conflict resolution.
 
 
 
