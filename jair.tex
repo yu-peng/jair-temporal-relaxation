@@ -1606,8 +1606,10 @@ which includes both discrete and continuous relaxations for the known conflicts,
 will then be enqueued. For example, assume that we apply BCDR to the example
 presented in Figure \ref{fig:example_cctp}. When expanding
 a partial candidate $\{AM$=$B\}$ with conflict
-$MS$=$X$, BCDR will create three child candidates that extends
-the partial candidate using the two alternative assignments of $MS$, $Y$ and $Z$
+\{$AM$=$B$,$MS$=$Y$,\textsc{UB}($C_{17}$) - \textsc{LB}($C_{7}$) -
+\textsc{LB}($C_{2}$) - \textsc{LB}($C_{15}$) - \textsc{LB}($C_{4}$) -
+\textsc{LB}($C_{9}$)\}, BCDR will create three child candidates that extends
+the partial candidate using the two alternative assignments of $MS$, $X$ and $Z$
 and a temporal relaxation to the upper bound of $C_{17}$ (Figure
 \ref{fig:ExpandOnConflict}). All expanded candidates
 will then be added back to $Q$.
@@ -1627,13 +1629,13 @@ the partial candidate using the three possible assignments of $MS$ (Figure
 
 \begin{figure}[h!]
 	\centering
-	\begin{subfigure}[b]{0.35\textwidth}
+	\begin{subfigure}[b]{0.38\textwidth}
 		\includegraphics[width=\textwidth]{figures/expand_on_variable.pdf}
 		\caption{}
 		\label{fig:ExpandOnVariable}
 	\end{subfigure}
 	\hspace{1cm}
-	\begin{subfigure}[b]{0.35\textwidth}
+	\begin{subfigure}[b]{0.52\textwidth}
 		\includegraphics[width=\textwidth]{figures/expand_on_conflict.pdf}
 		\caption{}
 		\label{fig:ExpandOnConflict}
