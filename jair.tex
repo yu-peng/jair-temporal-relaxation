@@ -1573,6 +1573,7 @@ detail. The pseudo code of BCDR is given in Algorithm \ref{alg:bcdr}.
 {$U\leftarrow V$; the list of unassigned controllable variables}\;
 \Indm
 \Algorithm{}
+\nonl\textsc{BCDR}($\mathit{T}$)\\
 \Indp
 \While{$Q\neq \emptyset$}{
 	$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
@@ -1778,7 +1779,6 @@ resolve the conflicts.
 
 
 \begin{algorithm}[h!]
-	
 	\SetAlgoLined
 	\SetKwFunction{Return}{return}
 	\SetKwInput{Input}{Input}
@@ -1797,6 +1797,7 @@ resolve the conflicts.
 	{$A_{alter}\leftarrow \{\}$}; collection of alternative assignments for the ones in $\mathit{currConf}$\;
 	\Indm
 	\Algorithm{}
+	\nonl\textsc{ExpandOnConflict}($\mathit{Cand}$,$\mathit{currConf}$)\\
 	\Indp
 	\For{$a\in \mathit{currConf}$}{
 		$A_{alter}=A_{alter}\cup$\textsc{GetAlternatives}$(a)$\;
@@ -1928,6 +1929,7 @@ tightening uncertain constraints.
 	{$U\leftarrow V$; the list of unassigned controllable variables}\;
 	\Indm
 	\Algorithm{}
+	\nonl\textsc{BCDR-U}($\mathit{T}$)\\
 	\Indp
 	\While{$Q\neq \emptyset$}{
 		$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
@@ -2010,6 +2012,7 @@ variables. There are three major steps in this algorithm:
 	\Input{A grounded CCTPU $T=\langle V,E,E_u,L_e,L_p\rangle $.}
 	\Output{A conflict $\langle A,E',Exp\rangle $ that makes $T$ uncontrollable}
 	\Algorithm{}
+	\nonl\textsc{ControllabilityCheck}($\mathit{T}$)\\
 	\Indp
 	$DG\leftarrow$\textsc{GetDistanceGraph}$(T)$;\\
 	$ReductionQ\leftarrow$\textsc{NonContingentEdges}$(DG)$;\\
@@ -2127,6 +2130,7 @@ edges. Its pseudo code is presented in Algorithm \ref{alg:dc_conflict}.
 	\Input{A grounded CCTPU $T=\langle V,E,E_u,L_v,L_p\rangle $.}
 	\Output{A conflict $\langle A,E',Exp\rangle $ that makes $T$ uncontrollable}
 	\Algorithm{}
+	\nonl\textsc{ControllabilityCheck}($\mathit{T}$)\\
 	\Indp
 	$DG\leftarrow$\textsc{GetNormalDistanceGraph}$(T)$;\\
 	\For{1 to K}{ 
@@ -2396,7 +2400,7 @@ modifications from BCDR-U to BCDR-C are the following:
 	\SetKwInput{Algorithm}{Algorithm}
 	\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{endif}
 	\Indm
-	\Input{A cc-pCCTP $\langle P, Q, V, V_r, E, E_d, RE, L_e, L_p, f_p, f_e, \Delta_t,r\Delta_t,f_\Delta\rangle$.}
+	\Input{A cc-pCCTP $T = \langle P, Q, V, V_r, E, E_d, RE, L_e, L_p, f_p, f_e, \Delta_t,r\Delta_t,f_\Delta\rangle$.}
 	\Output{A solution $\langle A,R_e,\Delta'_t,N_{alloc},C_r,C_{cont}\rangle$ that maximize
 		$f_{p}-f_{e}-f_\Delta$.}
 	\Initialize{}
@@ -2408,6 +2412,7 @@ modifications from BCDR-U to BCDR-C are the following:
 	{$U\leftarrow V$; the list of unassigned controllable variables}\;
 	\Indm
 	\Algorithm{}
+	\nonl\textsc{BCDR-C}($\mathit{T}$)\\
 	\Indp
 	\While{$Q\neq \emptyset$}{
 		$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
@@ -2642,6 +2647,7 @@ following conflicts:
 	{$Q\leftarrow\{\}$; the priority queue for candidate relaxations kept by BCDR}\;
 	\Indm
 	\Algorithm{}
+	\nonl\textsc{ReactiveBCDR}($\mathit{T}$)\\
 	\Indp
 	\While{$true$}{
 		$(Sol,C,Q)\leftarrow $\textsc{BCDR}$(T,C,Q)$\;
@@ -2659,7 +2665,7 @@ following conflicts:
 }
 }
 
-\caption{Reactive BCDR}
+\caption{The Reactive BCDR algorithm}
 \label{alg:reactive_bcdr}
 \end{algorithm}
 
@@ -2819,6 +2825,7 @@ Algorithm \ref{alg:modified_bellmanford}.
 	{$PredecessorEdge\leftarrow []$; the array for storing predecessor edge for each vertex}\;
 	\Indm
 	\Algorithm{}
+	\nonl\textsc{RelaxedBellmanFord}($\mathit{G}$,$\mathit{\epsilon}$)\\
 	\Indp
 	// Initialize distance and predecessor array\;
 	\nonl ... ...\\
