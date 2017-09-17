@@ -121,20 +121,23 @@ probability of failure to exceed the chance constraint, and increasing the level
 of accepted risk accordingly.
 
 
-Several methods have been developed to solve over-constrained temporal problems. \citeA{Beaumont_OCTRP_2001} applied partial constraint satisfaction techniques to find a subset of satisfiable constraints. Later, disjunctive
-constraints and optimality were added in the context of over-constrained
-Disjunctive Temporal Problems with Preferences (DTPPs)
-\cite{Peintner_Pref_2005}. In a DTPP, the disjuncts of every constraint are
-assigned a preference function that maps the temporal constraint to a cost
-value. The optimal partial solution is obtained by enumerating consistent
-subproblems using Branch \& Bound, as well as other optimization techniques
-introduced by \citeA{Khatib01temporalconstraint}. Most of the prior work has
-focused on restoring consistency through complete suspension of constraints,
-however, in real-world scenarios, the user often wants to preserve as much of
-the schedule as possible to minimize the perturbation. In addition, all prior
-work focused on temporal problems with only controllable durations. When applied
-to many real-world scenarios with uncertainty, their relaxations may fail since
-they only satisfy a subset of the possible times for the uncertain durations.
+Several methods have been developed to solve over-constrained temporal problems.
+\citeA{Beaumont_OCTRP_2001} applied partial constraint satisfaction techniques
+to find a subset of satisfiable constraints. Later, disjunctive constraints and
+optimality were added in the context of over-constrained Disjunctive Temporal
+Problems with Preferences (DTPPs) \cite{Peintner_Pref_2005}. In a DTPP, the
+disjuncts of every constraint are assigned a preference function that maps the
+temporal constraint to a cost value. The optimal partial solution is obtained by
+enumerating consistent subproblems using Branch \& Bound, as well as other
+optimization techniques introduced by \citeA{Khatib01temporalconstraint}. Most
+of the prior work has focused on restoring consistency through complete
+suspension of constraints, with the exception of \cite{lanz2015simple}, which
+restored controllability by tightening uncertain durations. However, in
+real-world scenarios, the user often wants to preserve as much of the schedule
+as possible to minimize the perturbation. In addition, all prior work focused on
+temporal problems with only controllable durations. When applied to many
+real-world scenarios with uncertainty, their relaxations may fail since they
+only satisfy a subset of the possible times for the uncertain durations.
 
 
 %Rewrite thia paragraph.  It looks miss placed.
@@ -154,8 +157,8 @@ they only satisfy a subset of the possible times for the uncertain durations.
 %
 %One you rewite this paragraph, have me focus on reviewing it.
 
-In this paper, we present our continuous relaxation approach, the Best-first
-Conflict-Directed Relaxation algorithm (BCDR), to address these issues. BCDR
+In contrast to the work on discrete relaxation, in this paper we focus on continuous relaxation, in which bounds on timing constraints are relaxed at some level of cost. Our approach, the Best-first
+Conflict-Directed Relaxation algorithm (BCDR),
 leverages prior work on hardware diagnosis \cite{DMS1987,Williams_CDAstar_2002}:
 instead of mode assignments, it diagnoses conflicts between temporal
 constraints, and computes continuous constraint relaxations to resolve these
@@ -1174,8 +1177,8 @@ from probability theory \cite{durrett2010probability}. Intuitively, when
 describing outcomes of random variables, we can imagine sampling $\omega$ from a
 sample space $\Omega$. The outcomes of random variables can be generated via
 functions $\mathbf{f}(\omega)$. Further, we have a probability measure $P$,
-which takes a subset $A\subseteq \Omega$ and gives the probability of samples
-being in $A$.
+which takes a subset $S\subseteq \Omega$ and gives the probability of samples
+being in $S$.
 
 A chance-constraint is rigorously defined as follows:
 
@@ -1184,7 +1187,7 @@ Consider a constraint program with decision variables $\mathbf{x}$, and a set of
 
 Let the set of constraints be defined over decision variables and random variables as 
 \[C = \bigvee_{i\in I}\bigwedge_{j\in J_i} A_j(\mathbf{x},\mathbf{f}(\omega))\geq b_j \]
-where $I$ can be thought of as a set of distinct scenarios, and $J_i$ can be thought of as a listing of the set of constraints required to hold in each scenario.
+where each $A_j$ is a measurable function, $I$ can be thought of as a set of distinct scenarios, and $J_i$ can be thought of as a listing of the set of constraints required to hold in each scenario.
 
 A \emph{chance-constraint} is a tuple $\langle C, \Delta\rangle$, requiring:
 \begin{align}
@@ -1192,6 +1195,15 @@ P(C\text{ satisfied}) \equiv P\left(\left\{\omega\left|\bigvee_{i\in I}\bigwedge
 \end{align}
 \label{def:chance-constraint}
 \end{mydef}
+
+As an example, consider a chance-constraint for Rich's mission in Figure \ref{fig:sample_ccpctp}. There are two distinct scenarios, in which sites X or Y are visited respectively. For the visit to site X, the constraints which must hold are $C_1$, $C_2$, $C_3$, $C_4$, and $C_11$, and for the visit to site Y, the constraints which must hold are $C_6$, $C_7$, $C_8$, $C_9$,and $C_11$. Note that, of the constraints, only $C_2$, $C_3$, $C_7$, and $C_8$ involve uncontrollable time points. Thus, we have our set of constraints $C$ in the chance constraint
+
+
+\begin{align*}
+C = \left((X_{sp}-X_A\geq 0) \land (X_L-X_{sp}\geq 50) \land (-X_L+X_{sp}\geq -60) \right) \lor \\
+\left((Y_{sp}-Y_A\geq 0)\land(Y_L-Y_{sp}\geq 45)\land(-Y_L+Y_{sp}\geq -60)\right)
+\end{align*}
+
 
 While the definition here is presented for constraints systems in disjunctive normal form, this is a general representation with conversions via De Morgan's laws, and is sufficient for the chance-constrained problem definitions presented below.
 
