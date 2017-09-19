@@ -134,7 +134,7 @@ of the prior work has focused on restoring consistency through complete
 suspension of constraints, with the exception of \cite{lanz2015simple}, which
 restored controllability by tightening uncertain durations. However, in
 real-world scenarios, the user often wants to preserve as much of the schedule
-as possible to minimize the perturbation. In addition, all prior work focused on
+as possible to minimize the perturbation. In addition, most prior work focused on
 temporal problems with only controllable durations. When applied to many
 real-world scenarios with uncertainty, their relaxations may fail since they
 only satisfy a subset of the possible times for the uncertain durations.
@@ -375,7 +375,7 @@ defining two variables for the choices he needs to make: AM (asphalt mounds
 sites) and MS (methane seep sites). AM has two options in its domain: A (40) and
 B (100). Each option is associated with a positive reward value that represents
 Rich's preference towards it, the larger the better. The other variable MS for
-methane seeps sites has three options: X (73), Y (80), and Z (47).
+methane seep sites has three options: X (73), Y (80), and Z (47).
 
 
 Next, we define twelve time points in the problem (Table \ref{table:events}): a
@@ -458,7 +458,7 @@ and B, methane seep sites X, Y, and Z).
 
 
 Table \ref{table:constraints} shows all the conditional constraints in the CCTP
-that encode the temporal relaxations between events. A subset of these constraints only hold for some choices, such as the duration of survey at site A ($C_1$) for assignment $AM\leftarrow A$. We represent this by saying that constraint $C_1$ is $ACTIVE$ only when the choice $AM\leftarrow A$ is made, and indicate this by labeling the constraint with $AM\leftarrow A$.  The label is called the guard of the conditional constraint. In this problem, constraints $C_1$ through
+that encode the temporal relations between events. A subset of these constraints only hold for some choices, such as the duration of survey at site A ($C_1$) for assignment $AM\leftarrow A$. We represent this by saying that constraint $C_1$ is $\mathit{ACTIVE}$ only when the choice $AM\leftarrow A$ is made, and indicate this by labeling the constraint with $AM\leftarrow A$.  The label is called the guard of the conditional constraint. In this problem, constraints $C_1$ through
 $C_5$ represent Rich's desired length of survey at
 five locations. For example, $B_L$--$B_A\in [45,60]$ indicates that Rich would like
 Sentry to spend between 45 and 60 minutes at asphalt mound site B. These constraints are labeled
@@ -531,10 +531,10 @@ in best-first order. Relaxation 1, which is first presented to Rich, suggests
 visiting site $B$ and $Y$. The survey time for $B$ should be reduced to 39
 minutes and the mission should be extended by 5 minutes. The utility of the
 relaxation is 171.5, which is computed by summing up the reward of two
-assignments, $AM \leftarrow B$ and $MS \leftarrow Y$ , and subtracting the cost
+assignments, $AM \leftarrow B$ and $MS \leftarrow Y$, and subtracting the cost
 of relaxing $C_2$ and $C_{17}$. If Rich changes his mind and decides not to
 relax $C_{17}$, Relaxation 2 will be generated which incorporates this new
-requirement. It takes Sentry to methane seeps site $X$, shortens the scan time
+requirement. It takes Sentry to methane seep site $X$, shortens the scan time
 to 57.5 minutes and reduces the survey time at $B$ to 42.5 minutes. If Rich is still
 unsatisfied and adds an additional requirement that survey time at the
 asphalt mound site should be no less than 44 minutes, Relaxation 3 will be presented, which respects both newly added requirements.\\
@@ -547,7 +547,7 @@ asphalt mound site should be no less than 44 minutes, Relaxation 3 will be prese
 
 
 \noindent\textbf{Definitions} \indent The example illustrates the
-modeling of over-constrained temporal problems with the CCTPs, and demonstrates
+modeling of over-constrained temporal problems with CCTPs, and demonstrates
 the most significant advantage of continuous relaxation: it minimizes
 perturbation to the original problem. Compared to discrete relaxations, which
 may ask Rich to give up on the survey for asphalt mound sites or methane seeps,
@@ -703,16 +703,16 @@ variables $q_i\in Q$. Each assignment is mapped to a positive reward value, such
 as $MS \leftarrow X:73$. The larger the number is, the more preferred the choice
 will be. $f_e$ is defined over relaxable constraints. The cost of relaxing an
 upper bound constraint $E_{ij}:v_j-v_i\leq u_{ij}$ from $u_{ij}$ to
-$u_{ij}^{\prime}$ is $f_{eij}(u_{ij}^{\prime}-u_{ij} )$. Figure
+$u_{ij}^{\prime}$ is $f_{eij}(u_{ij}^{\prime})$. Figure
 \ref{fig:sample_pref1}b shows an example function defined over
-$u_{ij}^{\prime}-u_{ij}$.
+$u_{ij}^{\prime}$.
 
 
 %Why?  You need to justify each new feature of your definition.
 %The motivation for this assumption is that ...
 
 The cost function for temporal constraints that restrict the lower bounds
-between two events is $f_{eij}(l_{ij}-l_{ij}^{\prime})$. This is illustrated in
+between two events is $f_{eij}(l_{ij}^{\prime})$. This is illustrated in
 Figure \ref{fig:sample_pref1}a. We assume that the user always prefers smaller
 relaxations: the values in the original constraints are equally and maximally
 preferred, and the preferences decreases as one moves away from the original
@@ -749,7 +749,7 @@ where a temporal relaxation is defined as a tuple, $\langle e,r_L,r_U\rangle$, a
 %	Define "weakened lower/up per bound".
 	
 	\item $r_L$ is a weakened lower bound for $e$ and $r_L\leq e_{lowerbound}$;
-	\item $r_U$ is a weakened upper bound for $e$ and $r_L\geq e_{upperbound}$.
+	\item $r_U$ is a weakened upper bound for $e$ and $r_U\geq e_{upperbound}$.
 \end{itemize}
 
 
@@ -817,7 +817,7 @@ to the generalization from STPPs to the Simple Temporal Problems with Preference
 
 
 We use Rich's mission to illustrate the modeling of relaxation problems
-with uncertainty duration. Table \ref{table:constraints} repeats all the
+with uncertain duration. Table \ref{table:constraints} repeats all the
 constraints for his mission. Note that Constraints $C_6$ through $C_{16}$ are
 highlighted in bold: they are uncontrollable temporal durations and encode the
 traversal times between locations. Their temporal bounds indicate the domain of
@@ -892,8 +892,7 @@ activity.
 The second solution is computed based on strong controllability (Figure
 \ref{fig:SCSolution}). It extends the mission time to 209 minutes, and decreases
 the lower bound of the survey time at $B$ to account for the uncertainty in
-the traversal between the ship and site $B$. This solution has a utility of
-83.9, and enables a schedule that satisfies Rich's requirements while being robust to
+the traversal between the ship and site $B$. This solution enables a schedule that satisfies Rich's requirements while being robust to
 the uncertain durations.
 
 \begin{figure}[ht!]
@@ -907,8 +906,7 @@ The third and final solution is computed based on dynamic controllability
 (Figure \ref{fig:DCSolution}). Unlike the strong controllability solution, it
 does not need to decrease the lower bound of survey time at $B$ to account for
 the uncertain traversal times, and hence is less conservative than the second
-solution, while still being safe. The solution has a higher utility of 57.4, and
-enables a dynamic schedule on the fly instead of a static schedule beforehand:
+solution, while still being safe. The solution enables a dynamic schedule on the fly instead of a static schedule beforehand:
 the times of leaving site $B$ and $X$ will depend on the actual traversal times.
 
 
@@ -1060,12 +1058,12 @@ probabilistic Controllable Conditional Temporal Problems (cc-pCCTPs) for modelin
 relaxation problems with chance constraints. 
 
 We again use Rich's mission as an example to illustrate the modeling. To
-simplify the example, we remove the asphalt mound site survey, leave only the methane seeps sites to visit, and make the traversal duration controllable. The
-periodic methane seeps at X is likely to occur at around 1:00PM, following a normal distribution with
-a standard deviation of 30 minutes. The seeps at Y will occur at around
+simplify the example, we remove the asphalt mound site survey, leave only the methane seep sites to visit, and make the traversal duration controllable. The
+periodic methane seep at X is likely to occur at around 1:00PM, following a normal distribution with
+a standard deviation of 30 minutes. The seep at Y will occur at around
 1:30PM and follows a normal distribution with a standard deviation of 50
 minutes. As described before, Sentry leaves the ship at 11:00AM, and needs to
-arrive at the site before the start of the methane seeps. In addition, at least 30
+arrive at the site before the start of the methane seep. In addition, at least 30
 minutes is required for traversing to the site, and 45 minutes for scanning. As
 before, Rich wants the mission to complete in 3 hours, with less than 5\% risk
 of violating \textbf{any} constraint, such as returning late or missing the event. We
@@ -1078,16 +1076,16 @@ can capture this problem using a cc-pCCTP (Figure \ref{fig:sample_ccpctp}).
 		\hline
 		\multicolumn{4}{|c|}{\textbf{Constraints and Uncertain Durations (in minutes)}} \\		
 		\hline		
-		$C_{1}$ & $X_A$-$S > [45,+\infty]$ & $MS \leftarrow X$ & Traversal to methane seeps site X\\
-		$C_{2}$ & $X_{sp}$-$X_A\in[0,+\infty]$ & $MS \leftarrow X$ & Wait for seeps at site X \\
+		$C_{1}$ & $X_A$-$S > [45,+\infty]$ & $MS \leftarrow X$ & Traversal to methane seep site X\\
+		$C_{2}$ & $X_{sp}$-$X_A\in[0,+\infty]$ & $MS \leftarrow X$ & Wait for seep at site X \\
 		$C_{3}$(R) & $X_L$-$X_{sp}\in[50,60]$ & $MS \leftarrow X$ & Scanning at site X \\ 
 		$C_{4}$ & $E$-$X_L\in[45,+\infty]$ & $MS \leftarrow X$ & Traversal from site X back to ship \\
-		$\mathbf{C_{5}}$ & $X_{sp}$-$S$ $\sim$$N(120,30)$ & $MS \leftarrow X$ & Seeps start time at X \\
-		$C_{6}$ & $Y_A$-$S\in[30,+\infty]$ & $MS \leftarrow Y$ & Traversal to methane seeps site Y\\
-		$C_{7}$ & $Y_{sp}$-$Y_A\in[0,+\infty]$ & $MS \leftarrow Y$ & Wait for seeps at site Y \\
+		$\mathbf{C_{5}}$ & $X_{sp}$-$S$ $\sim$$N(120,30)$ & $MS \leftarrow X$ & Seep start time at X \\
+		$C_{6}$ & $Y_A$-$S\in[30,+\infty]$ & $MS \leftarrow Y$ & Traversal to methane seep site Y\\
+		$C_{7}$ & $Y_{sp}$-$Y_A\in[0,+\infty]$ & $MS \leftarrow Y$ & Wait for seep at site Y \\
 		$C_{8}$(R) & $Y_L$-$Y_{sp}\in[45,60]$ & $MS \leftarrow Y$ & Scanning at site Y \\ 
 		$C_{9}$ & $E$-$Y_L\in[30,+\infty]$ & $MS \leftarrow Y$ & Traversal from site Y back to ship \\
-		$\mathbf{C_{10}}$ & $Y_{sp}$-$S$ = [$\mu=150,\sigma=50$] & $MS \leftarrow Y$ & Seeps start time at Y \\  
+		$\mathbf{C_{10}}$ & $Y_{sp}$-$S$ $\sim$$N(150,50)$ & $MS \leftarrow Y$ & Seep start time at Y \\  
 		$C_{11}$(R) & $E$-$S\in[0,180]$ & & Mission duration \\  
 		\hline
 	\end{tabular}
@@ -1105,7 +1103,7 @@ After evaluating all the requirements, BCDR determines that no dynamic
 execution policy exists that meets all requirements. It engages Rich and starts
 presenting relaxations that can restore the feasibility of Rich's problem. The
 first one asks Rich to \textbf{extend the mission} from 3 hours to 4 hours and 26
-minutes, which is robust for surveying the methane seeps at site X if it occurs between 11:45AM
+minutes, which is robust for surveying the methane seep at site X if it occurs between 11:45AM
 and 1:51PM (Figure \ref{fig:sample_ccpstp_sol1}). The probability of failure is determined by analyzing the assumptions on the uncertain duration: the probabilistic duration $C_5$ is turned into a set bounded one with bounds [45,171], and the network is checked to be dynamically controllable against all possible outcomes within the range.
 
 \begin{figure}[htb]
@@ -1119,7 +1117,7 @@ However, Rich rejects the solution and tells BCDR that the mission duration can
 be at most 4 hours, since the subsequent mission cannot be shortened by more
 than an hour. BCDR incorporates this new requirement and generates another
 relaxation, which requires Rich to accept an increased probability of failure, from 5\% to 20.85\%. This allows
-the mission to be completed in 4 hours, but cannot account for methane seeps that
+the mission to be completed in 4 hours, but cannot account for methane seep that
 occurs after 1:25PM (Figure \ref{fig:sample_ccpstp_sol2}).
 
 \begin{figure}[htb!]
@@ -1142,7 +1140,7 @@ Rich rejects the solution again and tells BCDR that he cannot take more than
 5\% risk. BCDR again incorporates this new constraint and generates the third
 relaxation, which asks Rich to reduce the survey time
 at site X to 24 minutes. This allows the mission to be
-completed in 4 hours, while being robust to methane seeps that takes place between 11:45AM and
+completed in 4 hours, while being robust to methane seep that takes place between 11:45AM and
 1:51PM (Figure \ref{fig:sample_ccpstp_sol3}).
 
 
@@ -1172,7 +1170,7 @@ the definition of chance-constraints to include disjunctions over constraints as
 well. It allows us to choose between multiple options to find one which meets
 our safety requirements.
 
-In the definition below, we use the standard definitions of random variables
+In the definition below, we use the standard definition of random variables
 from probability theory \cite{durrett2010probability}. Intuitively, when
 describing outcomes of random variables, we can imagine sampling $\omega$ from a
 sample space $\Omega$. The outcomes of random variables can be generated via
@@ -1196,7 +1194,7 @@ P(C\text{ satisfied}) \equiv P\left(\left\{\omega\left|\bigvee_{i\in I}\bigwedge
 \label{def:chance-constraint}
 \end{mydef}
 
-As an example, consider a chance-constraint for Rich's mission in Figure \ref{fig:sample_ccpctp}. There are two distinct scenarios, in which sites X or Y are visited respectively. For the visit to site X, the constraints which must hold are $C_1$, $C_2$, $C_3$, $C_4$, and $C_11$, and for the visit to site Y, the constraints which must hold are $C_6$, $C_7$, $C_8$, $C_9$,and $C_11$. Note that, of the constraints, only $C_2$, $C_3$, $C_7$, and $C_8$ involve uncontrollable time points. Thus, we have our set of constraints $C$ in the chance constraint
+As an example, consider a chance-constraint for Rich's mission in Figure \ref{fig:sample_ccpctp}. There are two distinct scenarios, in which sites X or Y are visited respectively. For the visit to site X, the constraints which must hold are $C_1$, $C_2$, $C_3$, $C_4$, and $C_{11}$, and for the visit to site Y, the constraints which must hold are $C_6$, $C_7$, $C_8$, $C_9$,and $C_{11}$. Note that, of the constraints, only $C_2$, $C_3$, $C_7$, and $C_8$ involve uncontrollable time points. Thus, we have our set of constraints $C$ in the chance constraint
 
 
 \begin{align*}
@@ -1205,7 +1203,7 @@ C = \left((X_{sp}-X_A\geq 0) \land (X_L-X_{sp}\geq 50) \land (-X_L+X_{sp}\geq -6
 \end{align*}
 
 
-While the definition here is presented for constraints systems in disjunctive normal form, this is a general representation with conversions via De Morgan's laws, and is sufficient for the chance-constrained problem definitions presented below.
+While the definition here is presented for constraint systems in disjunctive normal form, this is a general representation with conversions via De Morgan's laws, and is sufficient for the chance-constrained problem definitions presented below.
 
 The cc-pCCTP formalism extends CCTPU with probabilistic uncertain durations and chance
 constraints. Here, we first repeat the definition of cc-pSTP, as presented by
@@ -1576,7 +1574,7 @@ detail. The pseudo code of BCDR is given in Algorithm \ref{alg:bcdr}.
 \nonl\textsc{BCDR}($\mathit{T}$)\\
 \Indp
 \While{$Q\neq \emptyset$}{
-	$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
+	$\mathit{Cand}\leftarrow $\textsc{Dequeue}$(Q)$\;
 	$\mathit{currConf}\leftarrow$\textsc{UnresolvedConflicts}$(\mathit{Cand},C)$\;
 	\eIf{$\mathit{currConf}==null$}{
 		\eIf{isComplete?$(\mathit{Cand},U)$}{
@@ -1832,7 +1830,7 @@ new candidates using the resolutions to the conflict (Algorithm
 First, we generate resolutions for the conflict by negating variable assignments
 (Line 4-15). If a variable $p_i$ is conditioned on other assignments, in
 addition to flipping the assignment to $p_i$, we can also negate its guards. This
-deactivates the variable and resolves the conflict. Assuming that we have to make an additional decision on the imaging method, using either stereo camera or mono camera, for imaging methane seeps site Y. Then for a conflict that involves assignment $\mathit{IMAGE_Y=STEREO}$, given that we know variable $\mathit{IMAGE_Y}$ has label $MS=Y$, we can resolve the conflict by flipping the assignment to either $\mathit{IMAGE_Y}$ or $MS$: $\mathit{IMAGE_Y=MONO}$, $MS$=$X$ or $MS$=$Z$.
+deactivates the variable and resolves the conflict. Assuming that we have to make an additional decision on the imaging method, using either stereo camera or mono camera, for imaging methane seep site Y. Then for a conflict that involves assignment $\mathit{IMAGE_Y=STEREO}$, given that we know variable $\mathit{IMAGE_Y}$ has label $MS=Y$, we can resolve the conflict by flipping the assignment to either $\mathit{IMAGE_Y}$ or $MS$: $\mathit{IMAGE_Y=MONO}$, $MS$=$X$ or $MS$=$Z$.
 
 
 In the second stage, we compute the optimal continuous relaxation to the
@@ -1932,7 +1930,7 @@ tightening uncertain constraints.
 	\nonl\textsc{BCDR-U}($\mathit{T}$)\\
 	\Indp
 	\While{$Q\neq \emptyset$}{
-		$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
+		$\mathit{Cand}\leftarrow $\textsc{Dequeue}$(Q)$\;
 		$\mathit{currConf}\leftarrow$\textsc{UnresolvedConflicts}$(\mathit{Cand},C)$\;
 		\eIf{$\mathit{currConf}==null$}{
 			\eIf{isComplete?$(\mathit{Cand},U)$}{
@@ -2017,7 +2015,7 @@ variables. There are three major steps in this algorithm:
 	$DG\leftarrow$\textsc{GetDistanceGraph}$(T)$;\\
 	$ReductionQ\leftarrow$\textsc{NonContingentEdges}$(DG)$;\\
 	\While{$ReductionQ\neq \emptyset$}{
-		$\alpha\leftarrow $Dequeue$(ReductionQ)$\;
+		$\alpha\leftarrow $\textsc{Dequeue}$(ReductionQ)$\;
 		\uIf{\textsc{End}$(\alpha)$ is uncontrollable}{
 			$\beta\leftarrow$ \textsc{ContingentEdgeEndAt}$($\textsc{End}$(\alpha))$ //retrieve the contingent edge that ends at the end node of edge $\alpha$\;
 			$\alpha'\leftarrow$ \textsc{Reduce}$(\alpha,\beta)$;\\
@@ -2415,7 +2413,7 @@ modifications from BCDR-U to BCDR-C are the following:
 	\nonl\textsc{BCDR-C}($\mathit{T}$)\\
 	\Indp
 	\While{$Q\neq \emptyset$}{
-		$\mathit{Cand}\leftarrow $Dequeue$(Q)$\;
+		$\mathit{Cand}\leftarrow $\textsc{Dequeue}$(Q)$\;
 		$\mathit{currConf}\leftarrow$\textsc{UnresolvedConflict}$(\mathit{Cand},C)$\;
 		\eIf{$\mathit{currConf}==null$}{
 			\eIf{isComplete?$(\mathit{Cand},U)$}{
@@ -2588,7 +2586,7 @@ solution, three types of inputs can be accepted by BCDR:
 \begin{itemize}
 	
 	
-	\item Rejection of an assignment, such as ``I do not want to visit the methane seeps
+	\item Rejection of an assignment, such as ``I do not want to visit the methane seep
 	site X".
 	
 	
