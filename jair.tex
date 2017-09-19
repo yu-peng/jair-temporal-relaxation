@@ -3053,7 +3053,7 @@ all the test cases created, can be found on GitHub: https://github.com/yu-peng/c
 
 
 All experiments presented in this section were conducted on a desktop computer
-with an Intel Core i5-3470 processor and 16GB of RAM. The SNOPT optimizer we used
+with an Intel Core i7-2600 processor and 32GB of RAM. The SNOPT optimizer we used
 is version 7.2, and the Gurobi optimizer is version 6.5.1.
 
 
@@ -3069,7 +3069,7 @@ mission, and a dive may last between 6 to 16 hours. During each dive, a
 vehicle is tasked with a set of survey locations on the sea floor: the vehicle needs
 to traverse between each location, take samples and images, and return before running
 out of power. Due to unexpected ocean currents and incomplete terrain data, the
-traversal time between survey sites is highly uncertain and difficult to
+traversal times between survey sites is highly uncertain and difficult to
 estimate. It is almost impossible for the scientists to correctly assess the
 uncertainty of each dive and plan tasks accordingly to meet the risk bound and a
 large set of operational constraints.
@@ -3077,7 +3077,7 @@ large set of operational constraints.
 
 The advisor can check the feasibility
 of a mission plan and search for valid risk allocations that meet the risk
-requirement. If no such allocation can be found, the decision aid will explain
+requirement. If no such allocation can be found, it will explain
 the cause of failure using the conflicts detected during the search, and propose
 preferred relaxations to resolve the over-constrained plan. If the users are not
 satisfied with the results, they can ask the mission advisor to adjust the
@@ -3202,7 +3202,7 @@ scientists are willing to wait for.
 
 First, we present the results for Configuration A, B and C, which are BCDR,
 BCDR-U(SC) and BCDR-U(DC). The runtime performance of the three algorithms are
-presented in Figure \ref{fig:bcdr_runtime_results}. Each dot in the graphs
+presented in Figure \ref{fig:bcdr_runtime_results}. Each dot in the graph
 represents the cumulative number of instances solved on problems that contains
 equal or less number of constraints, which are indicated by the x-axis. In
 total, BCDR with temporal consistency checker solves 1589 problems within 30
@@ -3250,7 +3250,7 @@ operations than checking consistency, which contributed to their lower runtime
 performance. As presented in Section 3, we use the Bellman-Ford algorithm for
 consistency checking and negative loop extraction ($O(N^2logN)$). We add another
 layer of triangular reduction ($O(N^2)$) on top of it for checking strong
-controllability. For dynamic controllability, we use the \textsc{fastDCCheck}
+controllability. For dynamic controllability, we use the \textsc{fastDCcheck}
 algorithm $O(N^4)$, introduced by \citeA{Morris_astructural}. It is interesting to observe
 that BCDR-U(DC) out-performs BCDR-U(SC), as there is an order-of-magnitude difference in their checking
 algorithms' runtime complexity. This is likely the result of the smaller amount
@@ -3425,7 +3425,7 @@ simple example, constructed based on an SBS Transit article on bus
 bunching\footnote{`Sometimes, two buses of the same service arrive at the same
 time with one bus being overcrowded and the other almost empty. Why?',
 \url{http://www.sbstransit.com.sg/doyouknow/facts_bus.aspx.}}, to explain this
-problem. Assume that three three vehicles are running in 8-minute intervals and
+problem. Assume that three vehicles are running in 8-minute intervals and
 demand along the route is constant (Figure \ref{fig:bus_bunching1}).
 
 
@@ -3504,7 +3504,7 @@ a real-world system.
 \subsubsection{Setup}
 
 
-We selected the Red Line subway \footnote{\url{http://www.mbta.com/schedules_and_maps/subway/}} in Boston for this experiment. It is the busiest
+We selected the Red Line subway\footnote{\url{http://www.mbta.com/schedules_and_maps/subway/}} in Boston for this experiment. It is the busiest
 mass transit route in the city, carrying more than 250,000 passengers per day.
 The agency operating Red Line, the Massachusetts Bay Transit Authority, has been
 publishing performance data for every train operation since June 30, 2015. Using
@@ -3527,7 +3527,7 @@ for all 167 trains during a peak day along the inbound direction. Between
 neighboring trains, the headway constraints are added between their their
 arrival events at a station. The temporal bounds of these constraints are
 defined using the scheduled headway: [$Headway-1$,$Headway+1$]. We slightly
-weakened the headway requirements from the schedule by $\pm$1 minutes to allow
+weakened the headway requirements from the schedule by $\pm$1 minute to allow
 some flexibility for handling uncertainty, such that more efficient solutions
 can be generated.
 
@@ -3818,7 +3818,7 @@ Gurobi as the sub-solver for BCDR-U(DC). For the MIP encoding approach, we used 
 encoding introduced by \citeA{cui2015optimising} to compute the maximum
 flexibility that can be built into the uncertain durations. The problems in this
 experiment are of much smaller scale compared to the previous two experiments,
-and both approaches were able to solve all problem within the time limit (30
+and both approaches were able to solve all problems within the time limit (30
 seconds). For each test run, we recorded the computation times of both approaches for comparison.
 
 
@@ -3851,8 +3851,8 @@ only case in which BCDR-U(DC) spends more time, and we were interested in
 investigating the cause behind this issue. We started with the number of
 candidate relaxations evaluated in solving the problem (Figure
 \ref{fig:rcpsp_candidates}). Not surprisingly, BCDR-U(DC) tested many more
-candidates before reaching the optimal relaxations for Instance 135 (the 825th
-candidate dequeued), which explains the longer runtime on this problem. Next, we
+candidates before reaching the optimal relaxations for Instance 135 (825
+candidates dequeued), which explains the longer runtime on this problem. Next, we
 retrieved the utility of candidates generated by BCDR-U(DC) while solving
 Instance 135. Figure \ref{fig:rcpsp_candidate_utilities} presents the utility
 of BCDR-U(DC)'s candidates in a test run: from the first feasible candidate
@@ -3903,8 +3903,8 @@ with temporal uncertainty, either expressed as set-bounded uncertain durations,
 or probabilistic durations with chance constraints. The two variants, BCDR-U and
 BCDR-C, allow the users to diagnose the source of uncertainty in an
 over-constrained temporal problem, and enumerate preferred resolutions with
-bounded risk. They help the users to resolve conflicts in temporal problems by
-trading off safety margins with performance; providing flexibility for
+bounded risk. They help users resolve conflicts in temporal problems by
+trading off safety margins with performance, which provides flexibility for
 risk management in real world scenarios. 
 
 BCDR and its extensions have been
