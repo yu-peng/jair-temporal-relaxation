@@ -1604,15 +1604,15 @@ $C_{cont}\subseteq C_r$, all being empty lists in the first candidate. BCDR
 continues looping until the first relaxation is found that makes the CCTP
 consistent (Line 11). If BCDR does not find a consistent relaxation until the
 queue is exhausted, it returns null, indicating that no relaxation exists for the
-input CCTP (Line 24).
+input CCTP (Line 25).
 
 
 Within each loop, BCDR first dequeues the best partial candidate, $\mathit{Cand}$ (Line
-6). It checks if $\mathit{Cand}$ resolves all known conflicts (Line 7). If not, an
+7). It checks if $\mathit{Cand}$ resolves all known conflicts (Line 8). If not, an
 unresolved conflict $\mathit{currConf}$ will be returned by function
 \textsc{UnresolvedConflicts}, which compares the resolved conflicts $C_r$ in
 $\mathit{Cand}$ with all known conflicts $C$. $\mathit{currConf}$ is then used for expanding $\mathit{Cand}$
-by function \textsc{ExpandOnConflict} (Line 21). The child candidates of $\mathit{Cand}$,
+by function \textsc{ExpandOnConflict} (Line 22). The child candidates of $\mathit{Cand}$,
 which includes both discrete and continuous relaxations for the known conflicts,
 will then be enqueued. For example, assume that we apply BCDR to the example
 presented in Figure \ref{fig:example_cctp}. When expanding
@@ -1628,9 +1628,9 @@ will then be added back to $Q$.
 
 If $\mathit{Cand}$ resolves all known conflicts, BCDR then checks if it is complete,
 which means that no more variables can be assigned, by comparing its assignments
-and all unassigned variables in the CCTP (Line 9). If $\mathit{Cand}$ is incomplete, BCDR
+and all unassigned variables in the CCTP (Line 10). If $\mathit{Cand}$ is incomplete, BCDR
 will expand it using the assignments to one unassigned variable through function
-\textsc{ExpandOnVariable} (Line 18). For example, assume again that we need to expand
+\textsc{ExpandOnVariable} (Line 19). For example, assume again that we need to expand
 a partial candidate $\{AM$=$A\}$, but with variable
 $MS$:$\{X$,$Y$,$Z\}$. This time, we simply create three child candidates that extends
 the partial candidate using the three possible assignments of $MS$ (Figure
@@ -1657,10 +1657,10 @@ the partial candidate using the three possible assignments of $MS$ (Figure
 
 
 If $\mathit{Cand}$ is complete, BCDR proceeds to check its consistency using function
-\textsc{ConsistencyCheck} (Line 10). If no conflict is returned, $\mathit{Cand}$ will be
-returned as the best relaxation for the input CCTP (Line 12). If a new conflict,
+\textsc{ConsistencyCheck} (Line 11). If no conflict is returned, $\mathit{Cand}$ will be
+returned as the best relaxation for the input CCTP (Line 13). If a new conflict,
 $\mathit{newConf}$, is detected by \textsc{ConsistencyCheck}, BCDR will record it in $C$
-and put $\mathit{Cand}$ back to the queue for future expansions (Line 14,15), since it
+and put $\mathit{Cand}$ back to the queue for future expansions (Line 15,16), since it
 now has one unresolved conflict.
 
 
@@ -1670,9 +1670,7 @@ now has one unresolved conflict.
 Conflict learning is the key for resolving over-subscribed temporal plans. They
 explain the cause of failure and provide guidance for computing necessary
 relaxations. Previous approaches
-\cite{bobby_csail_report_2005,Li05generalizedconflict}, including the discrete
-relaxation version of BCDR
-presented in Chapter 3, only extract the set of conflicting episodes and their
+\cite{bobby_csail_report_2005,Li05generalizedconflict} only extract the set of conflicting episodes and their
 guard assignments as discrete conflicts.
 
 
@@ -1680,7 +1678,7 @@ guard assignments as discrete conflicts.
 	A discrete conflict is a pair $\langle E,Guards\rangle$, where:
 	\begin{itemize}
 		\item $E$ is a set of conflicting constraints in the CCTP;
-		\item $Guards$ is the set of guards assignments for all constraints in $E$;
+		\item $Guards$ is the set of guard assignments for all constraints in $E$;
 	\end{itemize}
 \end{mydef}
 
@@ -1726,12 +1724,12 @@ Given a complete candidate that assigns all active discrete variables, Function
 \textsc{ConsistencyCheck} evaluates the consistency of all activated temporal
 constraints. The function implements the Bellman-Ford algorithm
 \cite{bellman1956routing,ford1956network} for checking temporal consistency. If
-the candidate plan is temporally inconsistent, the algorithm will return a
+the candidate is temporally inconsistent, the algorithm will return a
 simple negative cycle as the cause of failure. We can extract the minimal
-inconsistent set of constraints, also called $minimal conflict$
+inconsistent set of constraints, also called $minimal$ $conflict$
 \cite{Liffiton_MUS_2005a}, using this simple negative cycle. For example, Figure
 \ref{fig:negative_cycle_consistency} shows a simple negative cycle detected in
-the TPN presented in Figure \ref{fig:example_cctp}: the mission time is too
+the CCTP presented in Figure \ref{fig:example_cctp}: the mission time is too
 tight for both tasks at site $B$ and $Y$.
 
 
@@ -1838,12 +1836,12 @@ relaxable temporal bounds (Line 16-22), which provides the lower bound on the
 cost for resolving the conflict continuously. We formulate the relaxation as an optimization
 problem with linear constraints (Line 16) and linear/quadratic objective
 function (Line 17). The objective function is the minimization over the sum of
-the relaxation costs of all relaxable constraints, as in (Equation \ref{eqn:rel_obj}).
+the relaxation costs of all relaxable constraints, as in Equation \ref{eqn:rel_obj}.
 The variables in this optimization problem are $LB_i'$ s and $UB_i'$ s, which
 are the relaxed bounds for each relaxable temporal constraint. For relaxable
 requirement constraints, their new temporal bounds must be no tighter than the
-original bounds, as in (Equation \ref{eqn:rel_req}). The resolution constraints in
-(Equation \ref{eqn:conf_res}) are added to ensure that all known conflicts are repaired
+original bounds, as in Equation \ref{eqn:rel_req}. The resolution constraints in
+Equation \ref{eqn:conf_res} are added to ensure that all known conflicts are repaired
 by the resolution. Given $m$ conflicts, the same number of resolution
 constraints will be added, each representing the negation of one linear
 expression in each conflict (Line 18).
@@ -1857,9 +1855,9 @@ expression in each conflict (Line 18).
 	\label{prob:conflict_resolution_consistency}
 \end{problem}
 
-For example, the conflict in (Figure \ref{fig:negative_cycle_consistency})
+For example, the conflict in Figure \ref{fig:negative_cycle_consistency}
 involves six temporal bounds. Among them, three are relaxable
-($C_{17},C_2,C_4$)that can be relaxed. We can define the following optimization
+($C_{17},C_2,C_4$) that can be relaxed. We can define the following optimization
 problem for computing the optimal continuous relaxations to resolve this
 conflict:
 
@@ -1877,7 +1875,7 @@ In this case, the best relaxation is: set $lb_{C4}'$ to 50 and $ub_{C17}'$ to
 Temporal Problem with Preferences. \citeA{Khatib01temporalconstraint}
 demonstrates that finding the optimal solution to a STPP with semi-convex
 preferences is tractable. In real world applications, we may substitute
-different optimization algorithms, depending on the preference functions, to
+different optimization algorithms, depending on the objective functions, to
 improve efficiency.
 
 
@@ -1896,7 +1894,7 @@ durations, such as CCTPUs, the consistency-based approach cannot find relaxation
 that is robust to all possible outcomes of the uncertainty. Here, we
 present the extension for conflict learning and resolution procedures that
 accounts for uncontrollable duration, which allows BCDR to enumerate strongly
-and dynamically controllable relaxations for CCTPUs. These changes are presented in Algorithm \ref{alg:bcdr_controllability}. First, \textsc{ControllabilityCheck} replaces the consistency check in BCDR
+and dynamically controllable relaxations for CCTPUs. These changes are presented in Algorithm \ref{alg:bcdr_controllability}. First, function \textsc{ControllabilityCheck} replaces the consistency check in BCDR
 presented earlier. Depending on the type of solution required, it checks either
 strong or dynamic controllability, and returns a conflict if the candidate
 fails the test. The key is to learn conflicts from strong and dynamic
@@ -1904,7 +1902,7 @@ controllability checking algorithms, and the conflict could be a mixed set of
 requirement constraints and uncertain duration. Second, Function
 \textsc{ExpandOnConflict} is extended to handle conflicts with uncertain
 durations, whose resolution may involve relaxing requirement constraints and
-tightening uncertain constraints.
+tightening uncertain durations.
 
 
 \begin{algorithm}[htb!]
@@ -2247,13 +2245,13 @@ the STNU is not dynamically controllable. In this example, one negative cycle
 can be detected that contains edge $E3\rightarrow E2$, $E2\rightarrow E1'$, and
 the reduced edge $E1'\rightarrow E3$. From this cycle, we can identify the
 linear expression that caused this conflict from all distance edges in the
-cycle: $UB(B)+LB(A)-UB(A)-LB(B) \le 0$. In addition, there is another subtle but
+cycle: $UB(B)+LB(A)-UB(A)-LB(B)$. In addition, there is another subtle but
 necessary element of this conflict: the reduction that adds edge $E1'\rightarrow
 E3$. The negative cycle would not exist without this reduced edge. Therefore,
-the expression that supports the reduction, $-LB(B) \le 0$, which guarantees a
+the expression that supports the reduction, $-LB(B)$, which guarantees a
 negative weight for the moat path, is included in the conflict. The conflict we
 can extract from the STNU is a conjunction of two linear expressions,
-\{$B_U+A_L-A_U-B_L$;$-B_L$\},. Making any one of them non-negative will
+\{$B_U+A_L-A_U-B_L$;$-B_L$\}. Making any one of them non-negative will
 resolve this conflict.
 
 
@@ -2284,7 +2282,7 @@ performance and is part of our future work to explore.
 
 As described in the beginning of this subsection, both BCDR-U(SC) and BCDR-U(DC) algorithms use the resolutions to
 unresolved conflicts to expand the search tree. For CCTPUs, there are three
-options for resolving its conflicts, which may include both controllable
+options for resolving conflicts, which may include both controllable
 constraints and uncertain duration:
 
 \begin{itemize}
@@ -2317,7 +2315,7 @@ Figure \ref{fig:dc_reduction4} using the following two approaches:
 
 Intuitively, to resolve a conflict we can directly require the weight of a
 previously negative cycle to be non-negative, or we can make sure the reduction
-which adds an edge never occurs. This choice in conflict resolution is unique to
+that adds an edge never occurs. This choice in conflict resolution is unique to
 dynamic controllability conflicts: a hybrid conflict from consistency or strong
 controllability checking only introduces one linear expression. This choice
 provides more flexibility in conflict resolution, although it also increases the
@@ -2348,8 +2346,8 @@ $ub_i'$) and tightened lower and upper bounds for uncertain durations
 
 The constraints in the optimization problem enforce the necessary properties.
 For CCTPUs, we have an additional set of constraints: for lower and upper bound
-variables of uncertain durations, their value must be within the range defined
-by the original bounds, and the new lower bound is smaller than the new upper
+variables of uncertain durations, their values must be within the range defined
+by the original bounds, and the new lower bound is smaller than or equal to the new upper
 bound, encoded by (\ref{eqn:unc_bds}). For example, given the conflict in Figure
 \ref{fig:dc_reduction1}, the relaxed bounds for uncertain duration $A$, $lb_{uA}'$
 and $ub_{uA}'$, must follow $10 \leq lb_{uA}' \leq ub_{uA}' \leq 15$.
@@ -2449,15 +2447,15 @@ and chance constraint ($\Delta_t$), and empty sets of resolved conflicts
 probabilistic uncertain durations, which is represented by a CCTPU
 ($N_{default}$). The initial allocation is computed from a non-linear solver and
 is conservative enough to satisfy the chance constraint. For example, we can
-compute the initial allocation by solving \ref{prob:conflict_resolution_cc}
+compute the initial allocation by solving Problem \ref{prob:conflict_resolution_cc}
 without any linear constraints from conflicts.  The initial candidate is the
 only element in the queue before search starts (Line 2).
 
 
-Within the main loop, BCDR-C first dequeues the best candidate (Line 6) and
-checks if it resolves all known conflicts (Line 7). If not, a conflict
+Within the main loop, BCDR-C first dequeues the best candidate (Line 7) and
+checks if it resolves all known conflicts (Line 8). If not, a conflict
 $\mathit{currConf}$ will be returned by function \textsc{UnresolvedConflict}. The
-unresolved conflict is then used for expanding $\mathit{Cand}$ (Line 21). All child
+unresolved conflict is then used for expanding $\mathit{Cand}$ (Line 22). All child
 candidates returned by function \textsc{ExpandOnConflictAndAllocateRisk} resolve
 $\mathit{currConf}$ while satisfying the chance constraints. The function also computes
 the risk allocation over probabilistic temporal durations for each candidate,
@@ -2466,10 +2464,10 @@ which is added back to the queue for future evaluation and expansion.
 
 If $\mathit{Cand}$ resolves all known conflicts, BCDR-C will proceed to check the
 controllability of its grounded CCTPU (function \textsc{ControllabilityCheck},
-Line 8). BCDR-C(SC) implements this function with a strong controllability checking algorithm, while BCDR-C(DC)'s function implements dynamic controllability checking. If the grounded network passes the check, $\mathit{Cand}$ will be returned as the best resolution to the
-cc-pCCTP (Line 12). Otherwise, a new conflict will be returned by this function
-and recorded for expanding candidates (Line 14). $\mathit{Cand}$ will also be added back
-to $Q$ since it now has an unresolved conflict (Line 15).
+Line 11). BCDR-C(SC) implements this function with a strong controllability checking algorithm, while BCDR-C(DC)'s function implements dynamic controllability checking. If the grounded network passes the check, $\mathit{Cand}$ will be returned as the best resolution to the
+cc-pCCTP (Line 13). Otherwise, a new conflict will be returned by this function
+and recorded for expanding candidates (Line 15). $\mathit{Cand}$ will also be added back
+to $Q$ since it now has an unresolved conflict (Line 16).
 
 Similar to BCDR and BCDR-U, every solution returned by BCDR-C is valid in that
 they have a feasible risk-allocation and pass the strong or dynamic
@@ -2524,7 +2522,7 @@ temporal bounds remain unchanged (omitted from the encoding).
 
 The resolution constraints in (\ref{eqn:conf_res_cc}) are added to ensure that
 all known conflicts are repaired by the resolution, similar to those in Problems
-\ref{prob:conflict_resolution_consistency} and \ref{prob:conflict_resolution_controllability}.. Given $m$ conflicts, the same number
+\ref{prob:conflict_resolution_consistency} and \ref{prob:conflict_resolution_controllability}. Given $m$ conflicts, the same number
 of resolution constraints will be added, each representing one linear expression
 in each conflict. Finally, we add a risk allocation constraint to ensure that
 the risk taken meets the chance constraint. This constraint is defined over the
@@ -2595,7 +2593,7 @@ solution, three types of inputs can be accepted by BCDR:
 	
 	
 	\item Rejection of a chance constraint relaxation, such as ``I cannot take more
-	than a 5\% risk of violating any constraints".
+	than 5\% risk of violating any constraints".
 	
 \end{itemize}
 
@@ -2639,7 +2637,7 @@ following conflicts:
 	\SetKwIF{If}{ElseIf}{Else}{if}{then}{else if}{else}{endif}
 	\Indm
 	\Input{$T$: A CCTP, CCTPU or cc-pCCTP.}
-	\Output{$Sol$: A valid relaxation, or $null$ is none exists for the input problem.}
+	\Output{$Sol$: A valid solution, or $null$ if none exists for the input problem.}
 	\Initialize{}
 	\Indp{$C\leftarrow\{\}$; the set of all known conflicts kept by BCDR}\;
 	{$Q\leftarrow\{\}$; the priority queue for candidate relaxations kept by BCDR}\;
@@ -2667,17 +2665,17 @@ following conflicts:
 \label{alg:reactive_bcdr}
 \end{algorithm}
 
-The pseudo code of this implementation, called \textsc{Reactive BCDR}, is
+The pseudo code of this implementation, called \textsc{ReactiveBCDR}, is
 presented in Algorithm \ref{alg:reactive_bcdr}. Note that the BCDR algorithm
 presented in earlier sections is wrapped inside the function \textsc{BCDR}.
-\textsc{Reactive BCDR} starts with querying \textsc{BCDR} for a solution to the
+\textsc{ReactiveBCDR} starts with querying \textsc{BCDR} for a solution to the
 given temporal problem, either a CCTP, a CCTPU or a cc-pCCTP (Line 4). If no
 solution can be found to the problem, the algorithm will signal failure and
 quit (Line 6). Otherwise, the first solution will be presented to the user. If
-the user accepts it, \textsc{Reactive BCDR} will return the solution and
-terminate (Line 8). If the user rejects it, it will prompt the user for
+the user accepts it, \textsc{ReactiveBCDR} will return the solution and
+terminate (Line 9). If the user rejects it, it will prompt the user for
 additional inputs, and encode them into conflicts using the three rules (Line
-11). Note that the current solution will also be put back to the queue, too,
+12). Note that the current solution will also be put back to the queue, too,
 since it now has an unresolved conflict. If no input is provided, BCDR will move
 on to find the next best solution, and the current solution is discarded.
 
@@ -2726,7 +2724,7 @@ issues and the rationale behind the modification to get BCDR working properly.
 %the relaxation generator. 
 
 The conflict-directed framework used by BCDR and all
-its extensions follows a generate and test approach, which coordinates
+its extensions follow a generate and test approach, which coordinates
 the generator (for computing continuous relaxations) and the tester (for checking
 temporal feasibility) to `challenge' each other until a relaxation
 that resolves every conflict is found. When the checker discovers a conflict
@@ -2753,7 +2751,7 @@ amount of reduction during DC checking and increases the chance of numerical
 precision issues. Here we do not require the input constraint bounds to be integer or rational values, which will be discussed later in this section as possible resolutions.
 
 
-We use the example from \ref{fig:dc_reduction4} to demonstrate this problem.
+We use the example from Figure \ref{fig:dc_reduction4} to demonstrate this problem.
 Recall that the conflict extracted from dynamic controllability checker for this
 CCTPU has two linear expressions: \{$B_U+A_L-A_U-B_L$;$-B_L$\}. Assume that the
 relaxation generator decided to increase $A_L$ to 15.0, which effectively
@@ -2848,7 +2846,7 @@ Algorithm \ref{alg:modified_bellmanford}.
 \end{algorithm}
 
 
-There are three steps in the Bellman-Ford Algorithm: initialization of distance
+There are three steps in the Bellman-Ford algorithm: initialization of distance
 and predecessor for vertices, updating the shortest distances to each vertex
 from source, and detecting and extracting any negative cycles. The key
 modification we made is the introduction of a non-negative sensitivity parameter
@@ -2897,7 +2895,7 @@ that the run time does not increase as fast when discovering new conflicts.
 		\caption{}
 		\label{fig:cont_relaxation_time}
 	\end{subfigure}
-	\caption{Profile of Continuous Relaxations in BCDR Runtime}
+	\caption{Profile of continuous relaxations in BCDR runtime}
 	\label{fig:conflict_resolution_time_1}
 \end{figure}
 
@@ -2911,7 +2909,7 @@ during the search we may use the greedy approach for a new candidate that can
 push BCDR to discover new conflicts. It takes very little time compared to the
 exact optimal relaxation, since it does not require calling the optimizer. It
 has significantly improved BCDR's runtime performance on large-scale and highly
-constrained problems. For the same over-constrained problems, this greedy
+constrained problems. For the same over-constrained problem, this greedy
 relaxation approach reduces the runtime to 7.2 seconds, within which only 0.89
 second were spent on conflict resolution. The same relaxation time and plot are
 shown in Figure \ref{fig:conflict_resolution_time_improved}. Each point in
@@ -2937,7 +2935,7 @@ may not be necessary for generating the optimal relaxation.
 		\caption{}
 		\label{fig:cont_relaxation_time_improved}
 	\end{subfigure}
-	\caption{Profile of Combined Greedy/Exact Relaxations in BCDR Runtime}
+	\caption{Profile of combined greedy/exact relaxations in BCDR runtime}
 	\label{fig:conflict_resolution_time_improved}
 \end{figure}
 
@@ -2987,7 +2985,7 @@ the continuous relaxation candidate will not be generated.
 The optimal relaxation procedure is moved outside of \textsc{ExpandOnConflict}, and to the main loop of BCDR. Once BCDR has verified
 the feasibility of a candidate solution, instead of retuning it, an additional
 procedure will be executed to check if the candidate contains any greedy
-relaxations (Line 12, Algorithm \ref{alg:bcdr_greedy}). If true, it will refine
+relaxations (Line 13, Algorithm \ref{alg:bcdr_greedy}). If true, it will refine
 the relaxations using the optimization procedure and generate a new candidate.
 The new candidate will be put back to the queue for further verification, since
 it may not be the best or consistent candidate after the updates to its
@@ -2996,7 +2994,7 @@ continuous relaxation. The greedy approach always underestimates the cost of res
 
 
 \begin{algorithm}[htb!]
-\setcounter{AlgoLine}{9}
+\setcounter{AlgoLine}{10}
 \nonl ... ...\\
 $\mathit{newConf}\leftarrow$\textsc{ConsistencyCheck}$(\mathit{Cand})$\;
 \If{$\mathit{newConf}==null$}{
@@ -3018,8 +3016,7 @@ This approach works very well on non-conditional problems, whose search tree has
 one single branch. However, it may not save time on conditional ones. To enumerate candidate solutions in best-first order, BCDR needs an
 accurate estimation for the cost of relaxation in order to prioritize
 candidates. In order to keep the heuristic function admissible, the cost for all
-greedy relaxation are set to zero. This is because the greedy relaxations will
-all have larger than optimal cost, and we have no idea how much the `minimal cost'
+greedy relaxation are set to zero. This is because the greedy relaxations have larger than optimal cost, and we have no idea how much the `minimal cost'
 will be. Hence, setting the cost to be zero retains the admissible property and
 still allows BCDR to do a best-first enumeration. However, if we stick to the
 greedy relaxations, the utility estimation for candidates may be off by a large
@@ -3916,6 +3913,9 @@ exploration, transit route management and job-shop schedule robustness analysis.
 Results from our experiments in these domains have demonstrated the algorithm's
 effectiveness in resolving large and complex problems.
 
+\section{Acknowledgments}
+We would like to thank Eric Timmons, Christian Muise, Andrew Wang, Yuening Zhang and Szymon Sidor for discussing and reviewing the work. We would like to acknowledge financial support from the
+Boeing Company under grant MIT-BA-GTA-1; the DARPA meta program under contract number 6923548; and the Australian Research Council Discovery Project Grant DP140104219.  We would like to thank the JAIR reviewers and editor for their insightful reviews, which helped us make significant improvements to this paper.
 
 \bibliographystyle{theapa}
 \bibliography{jair}
