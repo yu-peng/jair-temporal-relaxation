@@ -1,7 +1,7 @@
 \documentclass[jair,twoside,11pt,theapa]{article}
 \usepackage{jair, theapa, rawfonts}
 
-\ShortHeadings{Resolving Over-constrained Temporal Problems with Uncertainty}
+\ShortHeadings{Resolving Over-Constrained Temporal Problems with Uncertainty}
 {Yu, Williams, Fang, Cui \& Haslum}
 
 \usepackage[lined,linesnumbered]{algorithm2e}
@@ -27,7 +27,7 @@
 
 \begin{document}
 	
-\title{Resolving Over-constrained Temporal Problems\\ with Uncertainty through
+\title{Resolving Over-Constrained Temporal Problems\\ with Uncertainty through
 	Conflict-Directed Relaxation}
 
 \author{\name Peng Yu \email yupeng@mit.edu\\
@@ -35,6 +35,7 @@
 	\name Cheng Fang \email cfang@mit.edu\\
 	\addr Computer Science and Artificial Intelligence Laboratory, MIT\\
 	32 Vassar Street, Cambridge, Massachusetts 02139, USA\\
+	\newline
 	\name Jing Cui \email cui.jing@anu.edu.au\\
 	\name Patrik Haslum \email patrik.haslum@anu.edu.au\\	
 	\addr Research School of Computer Science, ANU \&\\
@@ -45,7 +46,9 @@
 \newtheorem{problem}{Problem}
 
 \maketitle
-	
+\jairheading{60}{2017}{99-100}{12/16}{10/17}
+\firstpageno{99}
+
 \begin{abstract}
 	
 	Over-subscription, that is, being assigned too many things to do, is commonly
@@ -54,8 +57,7 @@
 	each task. Decision makers can benefit from aids that identify when these failure
 	situations are likely, the root causes of these failures, and resolutions to
 	these failures.
-
-	
+		
 	In this paper, we present a decision assistant that helps users resolve
 	over-subscribed temporal problems. The system works like an experienced advisor
 	that can quickly identify the cause of failure underlying temporal problems and
@@ -73,7 +75,6 @@
 	can compute preferred trade-offs between the risk of violating a schedule
 	requirement, versus the loss of utility by weakening those requirements.
 	
-	
 	BCDR has been applied to several decision support applications in different
 	domains, including deep-sea exploration, urban travel planning and transit
 	system management. It has demonstrated its effectiveness in helping users
@@ -83,7 +84,7 @@
 	domains. Thanks to its conflict-driven approach for computing relaxations, BCDR
 	achieves one to two orders of magnitude improvements on runtime performance
 	when compared to state-of-the-art numerical solvers.
-
+	\newpage
 	
 \end{abstract}
 
@@ -131,7 +132,7 @@ temporal constraint to a cost value. The optimal partial solution is obtained by
 enumerating consistent subproblems using Branch \& Bound, as well as other
 optimization techniques introduced by \citeA{Khatib01temporalconstraint}. Most
 of the prior work has focused on restoring consistency through complete
-suspension of constraints, with the exception of \cite{lanz2015simple}, which
+suspension of constraints, with the exception of \citeA{lanz2015simple}, which
 restored controllability by tightening uncertain durations. However, in
 real-world scenarios, the user often wants to preserve as much of the schedule
 as possible to minimize the perturbation. In addition, most prior work focused on
@@ -302,18 +303,7 @@ the ocean scientists to find resolutions for the over-constrained problems.
 
 \subsection{Controllable Conditional Temporal Problems}
 
-%Put the example in a short, separate section, that precedes your different problem introdutions.
-%
-%Use Rich, rather than Eric.  You add credibility if you link the example to your west coast cruise.  Otherwise, this comes across as a toy example that a grad student dreamed up, without toching the real world.  Reference the cruise and show a picture from that cruise.  you should be leveraging the work we've put into applying this work to real world problems, to ensure that we are addressing real world needs.
-
-%Get rid of volcanoes, and instead use the science goals of the Santa Barbara cruise.
-%
-%You want to highlight that Uhura was developed to help out the chief scientist for this and similar missions. Use real names of real sites, which are then denoted by a letter, such as the first letter of the name.
-
-%Again, start with a real mission and a real map, labeled with the real sites and approximate durations.  Then build the example from it.
-
-
-\textbf{Motivating Example} \indent Consider the following example in which an
+Consider the following example in which an
 ocean scientist, Rich, is planning to deploy an autonomous underwater vehicle
 (AUV), Sentry (Figure \ref{fig:sentry}), to survey the sea floor close to the
 coast of Northern California. This mission is expected to start at 11:00AM from
@@ -546,7 +536,9 @@ asphalt mound site should be no less than 44 minutes, Relaxation 3 will be prese
 %Then say that you review the definition of the standard concept of CTP, as a stepping stone.  Explain why you do this, and explain the important difference.  Then dive into defining CTP.
 
 
-\noindent\textbf{Definitions} \indent The example illustrates the
+\subsubsection{Definitions} 
+
+The example illustrates the
 modeling of over-constrained temporal problems with CCTPs, and demonstrates
 the most significant advantage of continuous relaxation: it minimizes
 perturbation to the original problem. Compared to discrete relaxations, which
@@ -1043,7 +1035,7 @@ controllability. Due to the flexibility of dynamic controllability, there is usu
 
 
 
-\subsection{Conditional Probabilistic Temporal Problems with Chance-constraints}
+\subsection{Conditional Probabilistic Temporal Problems with Chance-Constraints}
 
 In many situations, modeling the uncertainty in temporal duration with a
 set-bounded representation is overly conservative, resulting in a loss of
@@ -1071,7 +1063,6 @@ can capture this problem using a cc-pCCTP (Figure \ref{fig:sample_ccpctp}).
 
 \begin{table}[ht!]	
 	\centering
-	\caption{Temporal constraints and uncertain duration in Rich's mission cc-pSTP}
 	\begin{tabular}{| m{1.5cm} m{4.5cm}  m{1.7cm} m{6.0cm}|}		
 		\hline
 		\multicolumn{4}{|c|}{\textbf{Constraints and Uncertain Durations (in minutes)}} \\		
@@ -1089,6 +1080,7 @@ can capture this problem using a cc-pCCTP (Figure \ref{fig:sample_ccpctp}).
 		$C_{11}$(R) & $E$-$S\in[0,180]$ & & Mission duration \\  
 		\hline
 	\end{tabular}
+	\caption{Temporal constraints and uncertain duration in Rich's mission cc-pSTP}
 	\label{table:ccpctp_constraints}
 \end{table}
 
@@ -1664,7 +1656,7 @@ and put $\mathit{Cand}$ back to the queue for future expansions (Line 15,16), si
 now has one unresolved conflict.
 
 
-\subsubsection{Conflict Learning From Consistency Checking}
+\subsubsection{Conflict Learning from Consistency Checking}
 
 
 Conflict learning is the key for resolving over-subscribed temporal plans. They
@@ -1952,7 +1944,7 @@ $Q\leftarrow$ $Q\cup$\textsc{ExpandOnConflict}($\mathit{Cand},\mathit{currConf}$
 \end{algorithm}
 
 
-\subsubsection{Conflict Learning For Strong Controllability}
+\subsubsection{Conflict Learning for Strong Controllability}
 
 
 For CCTPs, a conflict is an inconsistent set of temporal bounds from controllable durations. It can
@@ -2106,7 +2098,7 @@ same order of magnitude as consistency checking: both are dominated by the
 $O$($VE$) negative cycle detection.
 
 
-\subsubsection{Conflict Learning For Dynamic Controllability}
+\subsubsection{Conflict Learning for Dynamic Controllability}
 
 Our approach for learning conflicts from dynamic controllability checking
 algorithm is similar to that for strong controllability. We extend the
@@ -2353,7 +2345,7 @@ bound, encoded by (\ref{eqn:unc_bds}). For example, given the conflict in Figure
 and $ub_{uA}'$, must follow $10 \leq lb_{uA}' \leq ub_{uA}' \leq 15$.
 
 
-\subsection{BCDR-C: Computing Chance-constrained Relaxations}
+\subsection{BCDR-C: Computing Chance-Constrained Relaxations}
 
 Finally, we present the extension to the BCDR algorithm, called BCDR-C, that
 allows it to resolve over-constrained cc-pCCTPs. The extension leverages ideas
@@ -2715,7 +2707,7 @@ discussed in the following section: here we focus on the source of these
 issues and the rationale behind the modification to get BCDR working properly.
 
 
-\subsubsection{Numerical issues in continuous relaxation}
+\subsubsection{Numerical Issues in Continuous Relaxation}
 
 
 %While benchmarking the implementation of BCDR-U(DC) on some Resource Constrained
@@ -2862,7 +2854,7 @@ reliability. In our experiments, we set $\epsilon$ to $10^{-9}$ and found it to
 be sufficient to completely eliminate the numerical issues.
 
 
-\subsubsection{Delayed conflict resolutions}
+\subsubsection{Delayed Conflict Resolutions}
 
 
 Computing continuous relaxations is the most expensive procedure in BCDR. On the other hand, most of the
@@ -3057,7 +3049,7 @@ with an Intel Core i7-2600 processor and 32GB of RAM. The SNOPT optimizer we use
 is version 7.2, and the Gurobi optimizer is version 6.5.1.
 
 
-\subsection{Managing Deep-sea Exploration Missions}
+\subsection{Managing Deep-Sea Exploration Missions}
 
 
 As presented in the beginning of the paper, the BCDR algorithm has been
@@ -3420,7 +3412,7 @@ major challenge for reliable transit service.
 
 
 This problem has been investigated by many researchers in operation research,
-and \citeA{bellei2010transit} presents more details about it. Here we present a
+and \citeA{bellei2010transit} present more details about it. Here we present a
 simple example, constructed based on an SBS Transit article on bus
 bunching\footnote{`Sometimes, two buses of the same service arrive at the same
 time with one bus being overcrowded and the other almost empty. Why?',
@@ -3693,7 +3685,7 @@ BCDR-U is still able to significantly improve its performance on the relaxation
 problems when compared to the direct MIP encoding approach.
 
 
-\subsection{Robustness Analysis of Resource-constrained Project Schedules}
+\subsection{Robustness Analysis of Resource-Constrained Project Schedules}
 
 
 Finally, we present the application of BCDR to evaluating the robustness of
@@ -3913,9 +3905,9 @@ exploration, transit route management and job-shop schedule robustness analysis.
 Results from our experiments in these domains have demonstrated the algorithm's
 effectiveness in resolving large and complex problems.
 
-\section{Acknowledgments}
+\section*{Acknowledgments}
 We would like to thank Eric Timmons, Christian Muise, Andrew Wang, Yuening Zhang and Szymon Sidor for discussing and reviewing the work. We would like to acknowledge financial support from the
-Boeing Company under grant MIT-BA-GTA-1; the DARPA meta program under contract number 6923548; and the Australian Research Council Discovery Project Grant DP140104219.  We would like to thank the JAIR reviewers and editor for their insightful reviews, which helped us make significant improvements to this paper.
+Boeing Company under grant MIT-BA-GTA-1; the Defense Advanced Research Projects Agency under contract number HR0011-15-C-0098; the Defense Advanced Research Projects Agency meta program under contract number 6923548; and the Australian Research Council Discovery Project Grant DP140104219.  We would like to thank the JAIR reviewers and editor for their insightful reviews, which helped us make significant improvements to this paper.
 
 \bibliographystyle{theapa}
 \bibliography{jair}
